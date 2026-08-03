@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// ENUMS
+// -----------------------------------------------------------------------------
+
+enum Role {
+  CLIENT
+  STAFF
+  ADMIN
+  OWNER
+}
+
+enum ZoneType {
+  MINI_BOWLING
+  ARCADE
+  CONSOLE_PS5
+  CONSOLE_SWITCH
+  VR
+  KARAOKE_BOOTH
+  BOARD_GAMES
+}
+
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum MenuCategory {
+  FOOD
+  DRINK
+}
+
+enum TournamentStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+}
+
+// -----------------------------------------------------------------------------
+// MODELS
+// -----------------------------------------------------------------------------
+
+model User {
+  id        String   @id @default(uuid())
+  role      Role     @default(CLIENT)
+  name      String
+  email     String?  @unique
+  phone     String?
+  password  String?
+  
+  reservations Reservation[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Zone {
+  id           String   @id @default(uuid())
+  name         String   // e.g. "Pista 1", "Sillón PS5 A"
+  type         ZoneType
+  capacity     Int
+  isReservable Boolean  @default(true) // e.g. Arcade = false
+  
+  reservations Reservation[]
+}
+
+model Reservation {
+  id           String   @id @default(uuid())
+  
+  zoneId       String
+  zone         Zone     @relation(fields: [zoneId], references: [id])
+  
+  // Optional relation if we want to link it to a registered user
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id])
+  
+  // Guest info if not registered
+  customerName String
+  customerPhone String?
+  
+  startTime    DateTime
+  endTime      DateTime  // Calculated via fixed turn blocks (1 or 3 hours)
+  
+  status       ReservationStatus @default(PENDING)
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model MenuItem {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  category    MenuCategory
+  isAvailable Boolean  @default(true) // Admin panic button for stock
+  stats       Json?    // e.g. { "power": 8, "sweetness": 5 }
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tournament {
+  id          String   @id @default(uuid())
+  gameName    String
+  date        DateTime
+  maxPlayers  Int
+  prize       String?
+  status      TournamentStatus @default(UPCOMING)
+  
+  players     TournamentPlayer[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TournamentPlayer {
+  id           String @id @default(uuid())
+  
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  
+  gamerTag     String
+  status       String @default("REGISTERED") // Can be updated to "ELIMINATED", "WINNER", etc.
+  
+  createdAt    DateTime @default(now())
+}

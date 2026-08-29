@@ -1,16 +1,12 @@
 import { AuthRepository } from './repository';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { env } from '../../config/env';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key';
 const SALT_ROUNDS = 10;
 
 export class AuthService {
-  private repository: AuthRepository;
-
-  constructor() {
-    this.repository = new AuthRepository();
-  }
+  constructor(private repository: AuthRepository) {}
 
   async register(name: string, email: string, passwordPlain: string, phone?: string) {
     const existingUser = await this.repository.findUserByEmail(email);
@@ -45,7 +41,7 @@ export class AuthService {
 
     const token = jwt.sign(
       { userId: user.id, role: user.role, email: user.email },
-      JWT_SECRET,
+      env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 

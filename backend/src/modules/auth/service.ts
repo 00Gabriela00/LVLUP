@@ -8,44 +8,55 @@ const SALT_ROUNDS = 10;
 export class AuthService {
   constructor(private repository: AuthRepository) {}
 
-  async register(name: string, email: string, passwordPlain: string, phone?: string) {
-    const existingUser = await this.repository.findUserByEmail(email);
-    if (existingUser) {
-      throw new Error('User already exists');
-    }
-
-    const passwordHash = await bcrypt.hash(passwordPlain, SALT_ROUNDS);
-    
-    const user = await this.repository.createUser({
-      name,
-      email,
-      phone,
-      password: passwordHash,
-      role: 'CLIENT', // Default role
-    });
-
-    const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword;
-  }
-
   async login(email: string, passwordPlain: string) {
-    const user = await this.repository.findUserByEmail(email);
-    if (!user || !user.password) {
-      throw new Error('Invalid credentials');
+    if (!email || !passwordPlain) {
+      throw new Error('Email y contraseña requeridos');
     }
 
-    const isMatch = await bcrypt.compare(passwordPlain, user.password);
+    const admin = await this.repository.findAdminByEmail(email);
+    if (!admin) {
+      throw new Error('Credenciales inválidas');
+    }
+
+    const isMatch = await bcrypt.compare(passwordPlain, admin.password);
     if (!isMatch) {
-      throw new Error('Invalid credentials');
+      throw new Error('Credenciales inválidas');
     }
 
     const token = jwt.sign(
-      { userId: user.id, role: user.role, email: user.email },
+      { userId: admin.id, email: admin.email, role: admin.role },
       env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '7d' }
     );
 
-    const { password, ...userWithoutPassword } = user;
-    return { user: userWithoutPassword, token };
+    const { password, ...adminSafe } = admin;
+    return { user: adminSafe, token };
+  }
+
+  async getMe(userId: string) {
+    const admin = await this.repository.findAdminById(userId);
+    if (!admin) {
+      throw new Error('Usuario administrador no encontrado');
+    }
+    return admin;
+  }
+
+  async changePassword(userId: string, currentPasswordPlain: string, newPasswordPlain: string) {
+    const admin = await this.repository.findAdminById(userId);
+    if (!admin) throw new Error('Usuario no encontrado');
+
+    const fullAdmin = await this.repository.findAdminByEmail(admin.email);
+    if (!fullAdmin) throw new Error('Usuario no encontrado');
+
+    const isMatch = await bcrypt.compare(currentPasswordPlain, fullAdmin.password);
+    if (!isMatch) throw new Error('Contraseña actual incorrecta');
+
+    if (newPasswordPlain.length < 8) {
+      throw new Error('La nueva contraseña debe tener al menos 8 caracteres');
+    }
+
+    const newHash = await bcrypt.hash(newPasswordPlain, SALT_ROUNDS);
+    await this.repository.updatePassword(userId, newHash);
+    return { success: true, message: 'Contraseña actualizada correctamente' };
   }
 }

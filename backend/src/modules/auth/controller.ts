@@ -1,50 +1,42 @@
 import { Request, Response } from 'express';
 import { AuthService } from './service';
+import { AuthRequest } from '../../core/authMiddleware';
 
 export class AuthController {
   constructor(private service: AuthService) {}
 
-  register = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { name, email, password, phone } = req.body;
-      if (!name || !email || !password) {
-        res.status(400).json({ error: 'Name, email and password are required' });
-        return;
-      }
-
-      const user = await this.service.register(name, email, password, phone);
-      res.status(201).json(user);
-    } catch (error: any) {
-      if (error.message === 'User already exists') {
-        res.status(409).json({ error: error.message });
-      } else {
-        res.status(500).json({ error: 'Internal server error' });
-      }
-    }
-  };
-
-  login = async (req: Request, res: Response): Promise<void> => {
+  async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      if (!email || !password) {
-        res.status(400).json({ error: 'Email and password are required' });
-        return;
-      }
-
       const result = await this.service.login(email, password);
-      res.status(200).json(result);
+      res.json(result);
     } catch (error: any) {
-      if (error.message === 'Invalid credentials') {
-        res.status(401).json({ error: error.message });
-      } else {
-        res.status(500).json({ error: 'Internal server error' });
-      }
+      res.status(400).json({ error: error.message || 'Error al iniciar sesión' });
     }
-  };
+  }
 
-  me = async (req: Request, res: Response): Promise<void> => {
-    // The user will be attached to the request by the auth middleware
-    const user = (req as any).user;
-    res.status(200).json({ user });
-  };
+  async me(req: AuthRequest, res: Response) {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: 'No autorizado' });
+      }
+      const admin = await this.service.getMe(req.user.userId);
+      res.json(admin);
+    } catch (error: any) {
+      res.status(404).json({ error: error.message || 'Usuario no encontrado' });
+    }
+  }
+
+  async changePassword(req: AuthRequest, res: Response) {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: 'No autorizado' });
+      }
+      const { currentPassword, newPassword } = req.body;
+      const result = await this.service.changePassword(req.user.userId, currentPassword, newPassword);
+      res.json(result);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message || 'Error al cambiar contraseña' });
+    }
+  }
 }

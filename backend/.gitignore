@@ -18,6 +18,9 @@ npm-debug.log*
 yarn-error.log*
 # Tests
 coverage/
+# Dynamic Uploads
+uploads/*
+!uploads/.gitkeep
 # SO y Editores
 .DS_Store
 .vscode/

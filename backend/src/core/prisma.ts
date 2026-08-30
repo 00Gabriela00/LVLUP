@@ -1,0 +1,21 @@
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
+import { env } from '../config/env';
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+function createPrismaClient(): PrismaClient {
+  const connectionString = env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/lvlup_db';
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
+
+  return new PrismaClient({
+    adapter,
+    log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
+  });
+}
+
+export const prisma = globalForPrisma.prisma || createPrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

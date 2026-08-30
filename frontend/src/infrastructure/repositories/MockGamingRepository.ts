@@ -1,7 +1,6 @@
 import { GamingRepository } from '../../domain/ports/GamingRepository';
 import { Game } from '../../domain/models/Game';
 import { Plan } from '../../domain/models/Plan';
-import { Tournament } from '../../domain/models/Tournament';
 import pacmanImage from '../../assets/pacman.jfif';
 import streetFighterImage from '../../assets/street fighter.jpg';
 import marioKartImage from '../../assets/mario-kart-8-deluxe-nintendo.jpg';
@@ -71,7 +70,7 @@ export class MockGamingRepository implements GamingRepository {
           'Cabina VIP Insonorizada',
           'Hardware competitivo (144Hz)',
           '2 Bebidas + 1 Info Snack Pack',
-          'Acceso prioritario a torneos'
+          'Reserva prioritaria en horas pico'
         ]
       },
       {
@@ -85,29 +84,6 @@ export class MockGamingRepository implements GamingRepository {
           'Cócteles temáticos ilimitados',
           'Acceso exclusivo a nuevos lanzamientos'
         ]
-      }
-    ];
-  }
-
-  async getTournaments(): Promise<Tournament[]> {
-    return [
-      {
-        id: '1',
-        title: 'Super Smash Bros Invitational',
-        gameTitle: 'Super Smash Bros Ultimate',
-        date: '2026-10-15T18:00:00Z',
-        prizePool: '$500 USD',
-        status: 'Inscripción Abierta',
-        imageUrl: 'https://images.unsplash.com/photo-1580234797602-22c37b4a6217?w=400&q=80'
-      },
-      {
-        id: '2',
-        title: 'Valorant 2v2 Spike Rush',
-        gameTitle: 'Valorant',
-        date: '2026-10-22T20:00:00Z',
-        prizePool: '$800 USD',
-        status: 'Inscripción Abierta',
-        imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&q=80'
       }
     ];
   }

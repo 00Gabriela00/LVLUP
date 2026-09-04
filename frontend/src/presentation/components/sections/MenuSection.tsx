@@ -50,19 +50,19 @@ function MenuCard({
       onClick={() => !editPrice && onSelect(item)}
       className={`relative group rounded-2xl border transition-all duration-200 overflow-hidden flex flex-col justify-between cursor-pointer will-change-transform ${
         item.disponible
-          ? 'bg-[#0e040c]/90 hover:bg-[#150613] border-white/[0.08] hover:border-brand-cyan/40 shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1'
-          : 'bg-[#080206]/60 border-white/[0.04] opacity-50'
+          ? 'bg-[#0e040c]/90 hover:bg-[#150613] border-white/8 hover:border-brand-cyan/40 shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1'
+          : 'bg-[#080206]/60 border-white/4 opacity-50'
       }`}
       role="article"
       aria-label={`${item.nombre} — $${item.precio.toFixed(2)}`}
     >
       {/* Top subtle glow line on hover */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-brand-cyan/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
       {/* Admin overlay actions */}
       {isAdminMode && (
         <div
-          className="p-2 bg-black/80 border-b border-white/[0.08] flex gap-1.5 z-20"
+          className="p-2 bg-black/80 border-b border-white/8 flex gap-1.5 z-20"
           role="group"
           aria-label="Controles admin"
           onClick={(e) => e.stopPropagation()}
@@ -88,7 +88,7 @@ function MenuCard({
 
       {/* Adaptative Photo Container (Fits Full Dish Cleanly) */}
       {item.foto && (
-        <div className="w-full h-48 sm:h-52 overflow-hidden relative bg-[#070105] border-b border-white/[0.06] flex items-center justify-center">
+        <div className="w-full h-48 sm:h-52 overflow-hidden relative bg-[#070105] border-b border-white/6 flex items-center justify-center">
           <img
             src={item.foto}
             alt={item.nombre}
@@ -98,7 +98,7 @@ function MenuCard({
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e040c] via-transparent to-transparent opacity-70 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-t from-[#0e040c] via-transparent to-transparent opacity-70 pointer-events-none" />
         </div>
       )}
 
@@ -122,7 +122,7 @@ function MenuCard({
             {item.etiquetas?.slice(0, 2).map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 rounded-md text-[10px] font-semibold text-white/70 bg-white/[0.04] border border-white/[0.06]"
+                className="px-2 py-0.5 rounded-md text-[10px] font-semibold text-white/70 bg-white/4 border border-white/6"
               >
                 {tag}
               </span>
@@ -145,7 +145,7 @@ function MenuCard({
               {item.ingredientes.slice(0, 3).map((ing) => (
                 <span
                   key={ing}
-                  className="text-[10px] font-medium text-brand-gray bg-black/30 px-2 py-0.5 rounded border border-white/[0.03]"
+                  className="text-[10px] font-medium text-brand-gray bg-black/30 px-2 py-0.5 rounded border border-white/3"
                 >
                   {ing}
                 </span>
@@ -160,7 +160,7 @@ function MenuCard({
         </div>
 
         {/* Price & Availability Row */}
-        <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+        <div className="pt-3 border-t border-white/6 flex items-center justify-between mt-auto">
           <div>
             {isAdminMode && editPrice ? (
               <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
@@ -230,7 +230,7 @@ function ItemDetailModal({
       aria-label={item.nombre}
     >
       <div
-        className="relative max-w-lg w-full rounded-3xl bg-[#11050f] border border-white/[0.12] shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden"
+        className="relative max-w-lg w-full rounded-3xl bg-[#11050f] border border-white/12 shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -244,7 +244,7 @@ function ItemDetailModal({
 
         {/* Photo Container — Proportional Fit */}
         {item.foto && (
-          <div className="w-full max-h-80 overflow-hidden relative bg-[#070105] border-b border-white/[0.08] flex items-center justify-center p-2">
+          <div className="w-full max-h-80 overflow-hidden relative bg-[#070105] border-b border-white/8 flex items-center justify-center p-2">
             <img
               src={item.foto}
               alt={item.nombre}
@@ -272,7 +272,7 @@ function ItemDetailModal({
             {item.etiquetas?.map((tag) => (
               <span
                 key={tag}
-                className="px-2.5 py-1 rounded-md text-[11px] font-semibold text-white/80 bg-white/[0.06] border border-white/[0.08]"
+                className="px-2.5 py-1 rounded-md text-[11px] font-semibold text-white/80 bg-white/6 border border-white/8"
               >
                 {tag}
               </span>
@@ -299,7 +299,7 @@ function ItemDetailModal({
                 {item.ingredientes.map((ing) => (
                   <span
                     key={ing}
-                    className="text-[12px] font-medium text-white/90 bg-white/[0.04] border border-white/[0.08] px-3 py-1 rounded-lg"
+                    className="text-[12px] font-medium text-white/90 bg-white/4 border border-white/8 px-3 py-1 rounded-lg"
                   >
                     {ing}
                   </span>
@@ -309,7 +309,7 @@ function ItemDetailModal({
           )}
 
           {/* Price */}
-          <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
+          <div className="pt-4 border-t border-white/8 flex items-center justify-between">
             <div>
               <span className="text-[11px] text-brand-gray uppercase font-bold block">Precio en Barra</span>
               <span className="text-[28px] font-black text-white leading-none">
@@ -366,7 +366,6 @@ export function MenuSection() {
           <div className="mb-12">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div>
-                <div className="section-label text-brand-cyan">Carta Gastronómica & Mixología</div>
                 <h2 id="menu-heading" className="section-title text-white mt-2">
                   {isAdminMode ? (
                     <span className="text-brand-purple-light">Gestión de Menú</span>
@@ -383,7 +382,7 @@ export function MenuSection() {
               )}
             </div>
 
-            <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-[560px] mt-4 font-normal">
+            <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-140 mt-4 font-normal">
               Desde cocteles de autor galácticos hasta burgers artesanales, rolls de sushi y snacks para compartir.
             </p>
           </div>
@@ -400,7 +399,7 @@ export function MenuSection() {
                 placeholder="Buscar por plato, ingrediente o etiqueta..."
                 value={searchQuery}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] focus:border-brand-cyan/50 rounded-xl pl-10 pr-4 py-3 text-[13px] text-white placeholder:text-brand-gray outline-none transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+                className="w-full bg-white/4 hover:bg-white/6 border border-white/8 focus:border-brand-cyan/50 rounded-xl pl-10 pr-4 py-3 text-[13px] text-white placeholder:text-brand-gray outline-none transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
                 aria-label="Buscar en el menu"
                 id="menu-search"
               />

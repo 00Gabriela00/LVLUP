@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LogoIcon, MenuIcon, CloseIcon } from '../icons/CustomIcons';
 
 const NAV_LINKS = [
-  { href: '#servicios', label: 'Servicios', id: 'servicios' },
-  { href: '#menu', label: 'Menú', id: 'menu' },
-  { href: '#gaming', label: 'Gaming', id: 'gaming' },
   { href: '#promos', label: 'Promos', id: 'promos' },
+  { href: '#servicios', label: 'Servicios', id: 'servicios' },
+  { href: '#gaming', label: 'Gaming', id: 'gaming' },
+  { href: '#menu', label: 'Menú', id: 'menu' },
   { href: '#contacto', label: 'Contacto', id: 'contacto' },
 ] as const;
 
@@ -101,8 +101,8 @@ export function Navbar() {
           <nav
             className={`flex items-center justify-between px-5 py-2.5 rounded-2xl transition-all duration-300 ${
               isScrolled
-                ? 'bg-[#050508]/85 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(0,229,255,0.04)]'
-                : 'bg-[#050508]/60 backdrop-blur-md border border-white/[0.04]'
+                ? 'bg-[#050508]/85 backdrop-blur-xl border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(0,229,255,0.04)]'
+                : 'bg-[#050508]/60 backdrop-blur-md border border-white/4'
             }`}
             aria-label="Navegación principal"
           >
@@ -113,7 +113,7 @@ export function Navbar() {
               className="flex items-center gap-2.5 group cursor-pointer"
               aria-label="LVLUP Game Bar — Inicio"
             >
-              <LogoIcon size={36} className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-2deg]" />
+              <LogoIcon size={36} className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-2" />
               <div>
                 <div className="text-lg font-black italic tracking-tight text-white leading-none">
                   LVL<span className="text-brand-cyan drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">UP</span>
@@ -125,7 +125,7 @@ export function Navbar() {
             </a>
 
             {/* Navegacion de escritorio con pill dinamico */}
-            <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-white/[0.02] border border-white/[0.03]" role="navigation">
+            <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-white/2 border border-white/3" role="navigation">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -136,14 +136,14 @@ export function Navbar() {
                     className={`relative px-4 py-2 rounded-lg text-[13px] font-semibold tracking-wide transition-all duration-200 cursor-pointer select-none ${
                       isActive
                         ? 'text-brand-cyan font-bold text-glow-cyan'
-                        : 'text-brand-gray hover:text-white hover:bg-white/[0.04]'
+                        : 'text-brand-gray hover:text-white hover:bg-white/4'
                     }`}
                   >
                     {/* Pill background dinamico detras de tab activo */}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavPill"
-                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-brand-cyan/15 via-brand-purple/10 to-brand-pink/15 border border-brand-cyan/30 shadow-[0_0_16px_rgba(0,229,255,0.18)] -z-10"
+                        className="absolute inset-0 rounded-lg bg-linear-to-r from-brand-cyan/15 via-brand-purple/10 to-brand-pink/15 border border-brand-cyan/30 shadow-[0_0_16px_rgba(0,229,255,0.18)] -z-10"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -165,7 +165,7 @@ export function Navbar() {
             <div className="flex items-center">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.07] border border-white/[0.05] transition-all"
+                className="md:hidden p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/7 border border-white/5 transition-all"
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
                 aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -184,7 +184,7 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -12, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="md:hidden mt-2 rounded-2xl bg-[#050508]/95 backdrop-blur-2xl border border-white/[0.08] p-4 shadow-[0_16px_48px_rgba(0,0,0,0.8)]"
+                className="md:hidden mt-2 rounded-2xl bg-[#050508]/95 backdrop-blur-2xl border border-white/8 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.8)]"
                 role="navigation"
                 aria-label="Navegación mobile"
               >
@@ -198,8 +198,8 @@ export function Navbar() {
                         onClick={(e) => handleNavClick(e, link.id)}
                         className={`flex items-center justify-between py-3 px-4 rounded-xl text-[14px] font-semibold transition-all ${
                           isActive
-                            ? 'bg-gradient-to-r from-brand-cyan/15 to-transparent border border-brand-cyan/30 text-brand-cyan font-bold'
-                            : 'text-white/75 hover:text-white hover:bg-white/[0.05]'
+                            ? 'bg-linear-to-r from-brand-cyan/15 to-transparent border border-brand-cyan/30 text-brand-cyan font-bold'
+                            : 'text-white/75 hover:text-white hover:bg-white/5'
                         }`}
                       >
                         <span>{link.label}</span>

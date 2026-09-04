@@ -25,7 +25,7 @@ export function LocationSection() {
   return (
     <section id="contacto" className="relative py-24 overflow-hidden" aria-labelledby="contacto-heading">
       {/* Background ambient light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-purple/[0.04] blur-[150px] -z-10 pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-125 bg-brand-purple/4 blur-[150px] -z-10 pointer-events-none" aria-hidden="true" />
 
       <div className="container-site">
         {/* Section Header */}
@@ -36,11 +36,10 @@ export function LocationSection() {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center"
         >
-          <div className="section-label text-brand-cyan mx-auto">Visítanos & Conéctate</div>
           <h2 id="contacto-heading" className="section-title text-white mt-2">
             <span className="section-title-deco">Ubicación & Horarios</span>
           </h2>
-          <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-[540px] mx-auto mt-4 font-normal">
+          <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-135 mx-auto mt-4 font-normal">
             Estamos listos para recibirte en {ubicacion.lugar}. Llégate directamente al local, pide en barra y vive la experiencia LVLUP.
           </p>
         </motion.div>
@@ -56,7 +55,7 @@ export function LocationSection() {
             className="lg:col-span-6 flex flex-col justify-between gap-6"
           >
             {/* Venue Location Card */}
-            <div className="rounded-3xl bg-[#0e040c]/85 border border-white/[0.08] p-7 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col justify-between flex-1">
+            <div className="rounded-3xl bg-[#0e040c]/85 border border-white/8 p-7 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col justify-between flex-1">
               <div>
                 <div className="flex items-center justify-between gap-3 mb-5">
                   <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/25 flex items-center justify-center text-brand-cyan shadow-[0_0_20px_rgba(0,229,255,0.15)]">
@@ -90,7 +89,7 @@ export function LocationSection() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-5 rounded-2xl bg-white/[0.04] hover:bg-brand-cyan/15 border border-white/[0.08] hover:border-brand-cyan/50 text-white hover:text-brand-cyan font-bold text-[13px] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] group"
+                className="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-5 rounded-2xl bg-white/4 hover:bg-brand-cyan/15 border border-white/8 hover:border-brand-cyan/50 text-white hover:text-brand-cyan font-bold text-[13px] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.3)] group"
               >
                 <span>Cómo Llegar en Google Maps</span>
                 <span className="text-brand-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true">↗</span>
@@ -106,7 +105,7 @@ export function LocationSection() {
                 className="group p-4.5 rounded-2xl bg-[#0e040c]/85 border border-[#25D366]/20 hover:border-[#25D366]/60 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.4)] flex items-center gap-3.5"
                 aria-label="WhatsApp Oficial"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#25D366]/15 text-[#25D366] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <WhatsAppIcon size={22} />
                 </div>
                 <div className="min-w-0">
@@ -122,7 +121,7 @@ export function LocationSection() {
                 className="group p-4.5 rounded-2xl bg-[#0e040c]/85 border border-brand-pink/20 hover:border-brand-pink/60 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.4)] flex items-center gap-3.5"
                 aria-label="Instagram Oficial"
               >
-                <div className="w-11 h-11 rounded-xl bg-brand-pink/15 text-brand-pink flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-brand-pink/15 text-brand-pink flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <InstagramIcon size={22} />
                 </div>
                 <div className="min-w-0">
@@ -139,7 +138,7 @@ export function LocationSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 rounded-3xl bg-[#0e040c]/85 border border-white/[0.08] p-7 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+            className="lg:col-span-6 rounded-3xl bg-[#0e040c]/85 border border-white/8 p-7 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
             <div>
               <div className="flex items-center gap-3 mb-6">
@@ -166,8 +165,8 @@ export function LocationSection() {
                       role="listitem"
                       className={`flex items-center justify-between py-2.5 px-4 rounded-xl transition-all duration-200 ${
                         isToday
-                          ? 'bg-gradient-to-r from-brand-cyan/20 via-brand-cyan/5 to-transparent border border-brand-cyan/40 text-white shadow-[0_0_20px_rgba(0,229,255,0.08)]'
-                          : 'bg-white/[0.02] border border-white/[0.02] text-white/70 hover:bg-white/[0.04]'
+                          ? 'bg-linear-to-r from-brand-cyan/20 via-brand-cyan/5 to-transparent border border-brand-cyan/40 text-white shadow-[0_0_20px_rgba(0,229,255,0.08)]'
+                          : 'bg-white/2 border border-white/2 text-white/70 hover:bg-white/4'
                       }`}
                     >
                       <span className="text-[13px] font-bold flex items-center gap-2">
@@ -191,7 +190,7 @@ export function LocationSection() {
               </div>
             </div>
 
-            <div className="pt-5 border-t border-white/[0.06] mt-6 flex items-center justify-between text-[11.5px] text-white/50">
+            <div className="pt-5 border-t border-white/6 mt-6 flex items-center justify-between text-[11.5px] text-white/50">
               <span>Atención directa en barra y mesas</span>
               <span className="text-white/75 font-bold">Precios en USD</span>
             </div>

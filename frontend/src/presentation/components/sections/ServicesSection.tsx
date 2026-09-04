@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { GamepadIcon, BurgerIcon, BilliardIcon, CheckIcon } from '../icons/CustomIcons';
+import { GamepadIcon, BurgerIcon, BilliardIcon } from '../icons/CustomIcons';
 
 const SERVICES = [
   {
@@ -55,7 +55,7 @@ export function ServicesSection() {
   return (
     <section id="servicios" className="relative py-24" aria-labelledby="servicios-heading">
       {/* Background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-purple/[0.04] blur-[100px] -z-10" aria-hidden="true" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-100 bg-brand-purple/4 blur-[100px] -z-10" aria-hidden="true" />
 
       <div className="container-site">
         {/* Section Header */}
@@ -66,11 +66,10 @@ export function ServicesSection() {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <div className="section-label text-brand-cyan">Nuestras Zonas</div>
           <h2 id="servicios-heading" className="section-title text-white mt-2">
             <span className="section-title-deco">Todo en Un Solo Lugar</span>
           </h2>
-          <p className="text-brand-gray text-[1rem] leading-relaxed max-w-[520px] mt-6">
+          <p className="text-brand-gray text-[1rem] leading-relaxed max-w-130 mt-6">
             Tres experiencias de entretenimiento, una sola noche. Disfruta de gaming, juegos de salon y la mejor gastronomia galactica.
           </p>
         </motion.div>
@@ -86,35 +85,38 @@ export function ServicesSection() {
         >
           {SERVICES.map((svc) => {
             const Icon = svc.icon;
+            const colorHex = svc.key === 'gaming' ? '#22d3ee' : svc.key === 'game-room' ? '#b26bff' : '#ff4d6d';
+            
             return (
               <motion.article
                 key={svc.key}
                 variants={item}
-                className={`glass-card glass-card-${svc.key === 'gaming' ? '' : svc.key === 'game-room' ? 'purple' : 'pink'} p-7 flex flex-col border-t-[2px] ${svc.border}`}
+                className="svc flex flex-col"
+                style={{ '--c': colorHex } as React.CSSProperties}
                 role="listitem"
               >
                 {/* Icon + Label */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className={`w-11 h-11 rounded-xl ${svc.dimBg} flex items-center justify-center ${svc.color} flex-shrink-0`}>
-                    <Icon size={22} aria-hidden="true" />
+                <div className="svc-top">
+                  <div className="svc-icon text-white">
+                    <Icon size={24} aria-hidden="true" />
                   </div>
                   <div>
-                    <div className={`${svc.color} text-[10px] font-black tracking-[0.2em] uppercase`}>{svc.label}</div>
-                    <div className="text-white text-[16px] font-bold mt-0.5">{svc.title}</div>
+                    <div className="svc-eyebrow">{svc.label}</div>
+                    <h3 className="text-white">{svc.title}</h3>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-brand-gray text-[14px] leading-relaxed mb-6">
+                <p className="desc text-left">
                   {svc.desc}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-2.5 mt-auto" aria-label={`Caracteristicas de ${svc.title}`}>
+                <ul className="feat-list mt-auto text-left" aria-label={`Características de ${svc.title}`}>
                   {svc.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2.5">
-                      <CheckIcon size={14} className="text-green-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
-                      <span className="text-[13px] text-brand-gray-light leading-snug">{it}</span>
+                    <li key={it}>
+                      <span className="check">✓</span>
+                      <span>{it}</span>
                     </li>
                   ))}
                 </ul>
@@ -122,10 +124,9 @@ export function ServicesSection() {
                 {/* CTA */}
                 <a
                   href={`#${svc.key === 'food' ? 'menu' : 'gaming'}`}
-                  className={`mt-6 text-[12px] font-bold tracking-wide ${svc.color} hover:underline flex items-center gap-1`}
+                  className="svc-cta"
                 >
-                  Ver mas
-                  <span aria-hidden="true">&#8250;</span>
+                  Ver más <span className="arrow">›</span>
                 </a>
               </motion.article>
             );

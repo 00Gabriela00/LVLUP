@@ -44,6 +44,11 @@ export interface Promo {
   activa: boolean;
   color: 'pink' | 'cyan' | 'purple';
   etiqueta?: string;
+  rareza?: 'COMUN' | 'POCO COMUN' | 'RARA' | 'EPICA' | 'LEGENDARIA';
+  icono?: string;
+  c1?: string;
+  c2?: string;
+  dropPercent?: number;
 }
 
 export interface InfoGeneral {
@@ -68,22 +73,22 @@ export const menuItems: MenuItem[] = [
   // ── COCTELES GALÁCTICOS (4) ─────────────────────
   {
     id: 'c1', nombre: 'Luna', descripcion: 'Coctel clásico con ingredientes premium seleccionados de la barra',
-    precio: 4.00, categoria: 'cocteles', disponible: true, popular: true, foto: '/images/sample/cocktail.jpg',
+    precio: 4.00, categoria: 'cocteles', disponible: true, popular: true, foto: '/images/Coctel_luna.png',
     etiquetas: ['Clásico', 'Popular'], ingredientes: ['Ron', 'Limón', 'Azúcar', 'Soda']
   },
   {
     id: 'c2', nombre: 'Venus', descripcion: 'Mezcla tropical con frutos cítricos y espíritu aventurero',
-    precio: 4.00, categoria: 'cocteles', disponible: true,
+    precio: 4.00, categoria: 'cocteles', disponible: true, foto: '/images/Coctel_venus.png',
     etiquetas: ['Tropical'], ingredientes: ['Vodka', 'Jugo de Piña', 'Coco']
   },
   {
     id: 'c3', nombre: 'Marte', descripcion: 'Intenso y atrevido, para los que no le huyen a la aventura',
-    precio: 4.00, categoria: 'cocteles', disponible: true,
+    precio: 4.00, categoria: 'cocteles', disponible: true, foto: '/images/Coctel_Marte.png',
     etiquetas: ['Intenso'], ingredientes: ['Whisky', 'Jengibre', 'Lima', 'Menta']
   },
   {
     id: 'c4', nombre: 'Supernova Signature', descripcion: 'La explosión de sabores más impresionante de todo el universo LVLUP',
-    precio: 10.00, categoria: 'cocteles', disponible: true, popular: true,
+    precio: 10.00, categoria: 'cocteles', disponible: true, popular: true, foto: '/images/Coctel_supernova.png',
     etiquetas: ['Signature', 'Estrella'], ingredientes: ['Ron Añejo', 'Licor de Naranja', 'Jarabe Especial']
   },
 
@@ -246,13 +251,18 @@ export const promos: Promo[] = [
   {
     id: 'p1',
     titulo: 'Happy Hour 2x1',
-    descripcion: 'Dos Mojitos por el precio de uno. Todos los lunes a jueves.',
+    descripcion: 'Dos mojitos por el precio de uno. Todos los lunes a jueves.',
     dias: ['Lunes', 'Martes', 'Miercoles', 'Jueves'],
     horaInicio: '16:00',
     horaFin: '19:00',
     activa: true,
     color: 'cyan',
-    etiqueta: 'HAPPY HOUR'
+    etiqueta: 'HAPPY HOUR',
+    rareza: 'COMUN',
+    icono: '🍸',
+    c1: '#1a2a2e',
+    c2: '#5df0d8',
+    dropPercent: 90,
   },
   {
     id: 'p2',
@@ -261,25 +271,40 @@ export const promos: Promo[] = [
     activa: true,
     color: 'pink',
     precioPromo: 7.00,
-    etiqueta: 'TODO EL DIA'
+    etiqueta: 'TODO EL DIA',
+    rareza: 'RARA',
+    icono: '🍗',
+    c1: '#1a2434',
+    c2: '#4d9dff',
+    dropPercent: 65,
   },
   {
     id: 'p3',
     titulo: 'Gamer Pack — Combo Absoluto',
-    descripcion: '1 hora de consola (PS5 o Switch) + Hamburguesa Interestelar + Bebida refrescante por un precio irresistible.',
+    descripcion: '1 hora de consola (PS5 o Switch) + Hamburguesa Interestelar + Bebida.',
     activa: true,
     color: 'purple',
     precioPromo: 12.00,
-    etiqueta: 'COMBO'
+    etiqueta: 'COMBO',
+    rareza: 'EPICA',
+    icono: '🎮',
+    c1: '#2a1a3a',
+    c2: '#b26bff',
+    dropPercent: 35,
   },
   {
     id: 'p4',
     titulo: 'Promo Burgers 2x1',
-    descripcion: 'Dos hamburguesas Americanas o Interestelar los domingos a jueves. Una por persona.',
+    descripcion: 'Dos hamburguesas Americanas o Interestelar. Una por persona.',
     dias: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves'],
     activa: true,
     color: 'cyan',
-    etiqueta: '2x1 BURGERS'
+    etiqueta: '2x1 BURGERS',
+    rareza: 'POCO COMUN',
+    icono: '🍔',
+    c1: '#1a2e22',
+    c2: '#7be07e',
+    dropPercent: 75,
   },
 ];
 

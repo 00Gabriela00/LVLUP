@@ -74,7 +74,7 @@ export function GallerySection() {
   return (
     <section id="galeria" className="relative py-24 overflow-hidden" aria-labelledby="experiencias-heading">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-brand-purple/[0.04] blur-[140px] -z-10 pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-125 rounded-full bg-brand-purple/4 blur-[140px] -z-10 pointer-events-none" aria-hidden="true" />
 
       <div className="container-site">
         {/* Header */}
@@ -85,7 +85,6 @@ export function GallerySection() {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center max-w-2xl mx-auto"
         >
-          <div className="section-label text-brand-cyan mx-auto">El Universo LVLUP</div>
           <h2 id="experiencias-heading" className="section-title text-white mt-2">
             <span className="section-title-deco">Dimensiones de la Experiencia</span>
           </h2>
@@ -106,15 +105,15 @@ export function GallerySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-3xl bg-[#0e040c]/85 border border-white/[0.08] hover:border-white/[0.18] p-7 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all duration-300 group hover:-translate-y-1"
+                className="rounded-3xl bg-[#0e040c]/85 border border-white/8 hover:border-white/18 p-7 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all duration-300 group hover:-translate-y-1"
               >
                 <div>
                   {/* Top Badge & Icon */}
                   <div className="flex items-center justify-between mb-5">
-                    <span className="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-wider bg-white/[0.04] text-white/80 border border-white/[0.08]">
+                    <span className="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-wider bg-white/4 text-white/80 border border-white/8">
                       {pillar.badge}
                     </span>
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,0,0,0.4)]">
+                    <div className="w-12 h-12 rounded-2xl bg-white/3 border border-white/8 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,0,0,0.4)]">
                       <IconComp size={24} />
                     </div>
                   </div>
@@ -136,7 +135,7 @@ export function GallerySection() {
                   <div className="space-y-2 mb-6">
                     {pillar.features.map((feat) => (
                       <div key={feat} className="flex items-center gap-2 text-[12px] text-white/85 font-medium">
-                        <ZapIcon size={12} className="text-brand-cyan flex-shrink-0" />
+                        <ZapIcon size={12} className="text-brand-cyan shrink-0" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -144,7 +143,7 @@ export function GallerySection() {
                 </div>
 
                 {/* CTA Action */}
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                <div className="pt-4 border-t border-white/6 flex items-center justify-between">
                   <a
                     href={pillar.href}
                     className="inline-flex items-center gap-2 text-[13px] font-bold text-white group-hover:text-brand-cyan transition-colors"

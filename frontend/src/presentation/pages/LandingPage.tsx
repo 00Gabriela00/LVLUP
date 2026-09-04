@@ -6,35 +6,34 @@ import { MenuSection } from '../components/sections/MenuSection';
 import { GamingSection } from '../components/sections/GamingSection';
 import { PromosSection } from '../components/sections/PromosSection';
 import { LocationSection } from '../components/sections/LocationSection';
+import { StarfieldBackground } from '../components/common/StarfieldBackground';
 
 /* ──────────────────────────────────────────────
    LANDING PAGE — Page Assembly
    ────────────────────────────────────────────── */
 export function LandingPage() {
   return (
-    <div className="font-sans antialiased min-h-screen bg-[#080307] text-white overflow-x-hidden relative selection:bg-brand-pink/30 selection:text-white">
-      {/* Atmospheric Background: Deep Crimson Wine & Midnight Blue Mesh */}
-      <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Top-Left: Deep Crimson / Wine */}
-        <div className="absolute -top-[10%] -left-[10%] w-[800px] h-[800px] rounded-full bg-[#5a0018]/16 blur-[160px]" />
-        
-        {/* Top-Right: Deep Midnight Cyan / Blue */}
-        <div className="absolute -top-[10%] -right-[10%] w-[800px] h-[800px] rounded-full bg-[#00283d]/18 blur-[160px]" />
-        
-        {/* Bottom-Left: Deep Midnight Blue */}
-        <div className="absolute -bottom-[10%] -left-[10%] w-[750px] h-[750px] rounded-full bg-[#001f33]/15 blur-[160px]" />
-        
-        {/* Bottom-Right: Deep Wine / Ruby */}
-        <div className="absolute -bottom-[10%] -right-[10%] w-[750px] h-[750px] rounded-full bg-[#4a0014]/16 blur-[160px]" />
+    <div className="font-sans antialiased min-h-screen bg-[#050507] text-white overflow-x-hidden relative selection:bg-brand-pink/30 selection:text-white">
+      {/* Canvas Animado de Estrellas (Starfield) */}
+      <StarfieldBackground />
 
-        {/* Global smooth radial contrast vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(4,1,3,0.7)_100%)]" />
-      </div>
+      {/* Atmospheric Background: Gradientes radiales idénticos al mockup (#050507, 30% 20% Purple & 85% 70% Cyan) */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-40 overflow-hidden"
+        style={{
+          background: `
+            radial-gradient(ellipse 900px 600px at 30% 20%, rgba(40, 20, 70, 0.55), transparent 60%),
+            radial-gradient(ellipse 700px 500px at 85% 70%, rgba(10, 60, 70, 0.45), transparent 60%),
+            #050507
+          `,
+        }}
+        aria-hidden="true"
+      />
 
       {/* Skip to content for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-brand-cyan focus:text-brand-darker focus:font-bold focus:rounded-lg focus:text-sm"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-999 focus:px-4 focus:py-2 focus:bg-brand-cyan focus:text-brand-darker focus:font-bold focus:rounded-lg focus:text-sm"
       >
         Ir al contenido principal
       </a>
@@ -47,22 +46,22 @@ export function LandingPage() {
         {/* Section 1: Hero */}
         <Hero />
 
+        {/* Section 2: Promos (includes ticker) */}
+        <PromosSection />
+
         {/* Divider */}
         <div className="container-site">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" aria-hidden="true" />
+          <div className="h-px bg-linear-to-r from-transparent via-white/8 to-transparent" aria-hidden="true" />
         </div>
 
-        {/* Section 2: Services */}
+        {/* Section 3: Services */}
         <ServicesSection />
-
-        {/* Section 3: Menu */}
-        <MenuSection />
 
         {/* Section 4: Gaming */}
         <GamingSection />
 
-        {/* Section 5: Promos (includes ticker) */}
-        <PromosSection />
+        {/* Section 5: Menu */}
+        <MenuSection />
 
         {/* Section 6: Location & Contact */}
         <LocationSection />

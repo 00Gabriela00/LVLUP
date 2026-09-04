@@ -1,168 +1,117 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { gamingStations } from '../../../infrastructure/data/initialData';
-import type { GamingStation } from '../../../infrastructure/data/initialData';
-import { GamepadIcon, BilliardIcon, DiceIcon, CheckIcon, ClockIcon, ZapIcon, TrophyIcon } from '../icons/CustomIcons';
 
 /* ──────────────────────────────────────────────
-   UNIFIED GAMING STATION CARD
+   GAMING STATIONS DATA
    ────────────────────────────────────────────── */
-function StationCard({ station }: { station: GamingStation }) {
-  const [selectedDuration, setSelectedDuration] = useState<'30min' | '1hora'>('30min');
+interface GamingCard {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  tipo: string;   // rareza equivalente
+  icono: string;
+  c1: string;
+  c2: string;
+  dropPercent: number;
+}
 
-  // Determine icon & theme color based on station type
-  const isConsola = station.tipo === 'consola';
-  const isPS5 = station.consola === 'PS5';
-  const isSwitch = station.consola === 'Switch';
-  const isBillar = station.mesa === 'Billar';
+const GAMING_CARDS: GamingCard[] = [
+  {
+    id: 'ps5',
+    nombre: 'PlayStation 5',
+    descripcion: 'Poder gráfico 4K HDR, audio 3D y mandos DualSense con gatillos adaptativos.',
+    tipo: 'NEXT-GEN',
+    icono: '🎮',
+    c1: '#0a1e22',
+    c2: '#35e7ff',
+    dropPercent: 95,
+  },
+  {
+    id: 'switch',
+    nombre: 'Nintendo Switch',
+    descripcion: 'Diversión cooperativa instantánea para grupos con mandos Joy-Con inalámbricos.',
+    tipo: 'LOUNGE',
+    icono: '🕹️',
+    c1: '#160a22',
+    c2: '#b26bff',
+    dropPercent: 80,
+  },
+  {
+    id: 'billar',
+    nombre: 'Mesa de Billar',
+    descripcion: 'Mesa reglamentaria con paño de alta precisión, tacos de madera y set completo.',
+    tipo: 'PROFESIONAL',
+    icono: '🎱',
+    c1: '#200710',
+    c2: '#ff4d6d',
+    dropPercent: 70,
+  },
+  {
+    id: 'jenga',
+    nombre: 'Jenga Gigante XXL',
+    descripcion: 'Bloques de madera maciza a escala gigante. Pulso, tensión y diversión en grupo.',
+    tipo: 'ESTRATEGIA',
+    icono: '🪵',
+    c1: '#1e1200',
+    c2: '#ffb84d',
+    dropPercent: 65,
+  },
+  {
+    id: 'pingpong',
+    nombre: 'Ping Pong',
+    descripcion: 'Mesa reglamentaria para duelos 1v1 o dobles con paletas pro y pelotas incluidas.',
+    tipo: 'TENIS DE MESA',
+    icono: '🏓',
+    c1: '#071a08',
+    c2: '#7be07e',
+    dropPercent: 75,
+  },
+];
 
-  const getStationIcon = () => {
-    if (isConsola) return <GamepadIcon size={22} />;
-    if (isBillar) return <BilliardIcon size={22} />;
-    if (station.mesa === 'Ping Pong') return <TrophyIcon size={22} />;
-    return <DiceIcon size={22} />;
-  };
-
-  const getCategoryBadge = () => {
-    if (isPS5) return { label: 'PS5 NEXT-GEN', color: 'text-brand-cyan border-brand-cyan/30 bg-brand-cyan/10' };
-    if (isSwitch) return { label: 'NINTENDO SYSTEM', color: 'text-brand-purple-light border-brand-purple/30 bg-brand-purple/10' };
-    if (isBillar) return { label: 'BILLAR PROFESIONAL', color: 'text-brand-pink border-brand-pink/30 bg-brand-pink/10' };
-    if (station.mesa === 'Ping Pong') return { label: 'TENIS DE MESA', color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10' };
-    return { label: 'JUEGO DE ESTRATEGIA', color: 'text-amber-400 border-amber-500/30 bg-amber-500/10' };
-  };
-
-  // Specific items / equipment for salon games
-  const getFeatureList = () => {
-    if (station.juegos && station.juegos.length > 0) return station.juegos;
-    if (isBillar) return ['Paño Profesional', 'Tacos de Madera', 'Bolas Reglamentarias', 'Tiza y Triángulo'];
-    if (station.mesa === 'Jenga') return ['Madera Maciza', 'Escala Gigante XXL', 'Juego en Grupo', 'Estrategia y Tensión'];
-    if (station.mesa === 'Ping Pong') return ['Mesa Reglamentaria', 'Paletas Pro', 'Pelotas Incluidas', 'Partidas Rápidas'];
-    return ['Equipamiento Completo', 'Área Lounge'];
-  };
-
-  const badge = getCategoryBadge();
-  const currentPrice = selectedDuration === '30min' ? 3.00 : 6.00;
-
+/* ──────────────────────────────────────────────
+   GAMING LOOT CARD
+   ────────────────────────────────────────────── */
+function GamingLootCard({ card }: { card: GamingCard }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="h-full"
+    <div
+      className="loot"
+      style={{ '--c1': card.c1, '--c2': card.c2 } as React.CSSProperties}
+      role="article"
+      aria-label={`${card.nombre} — ${card.tipo}`}
     >
-      <article
-        className="glass-card h-full p-6 flex flex-col justify-between rounded-2xl border border-white/[0.07] hover:border-white/[0.15] bg-[#0c040a]/70 backdrop-blur-xl transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.5)] group relative overflow-hidden"
-        aria-label={station.nombre}
-      >
-        {/* Ambient card accent light */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-white/[0.02] rounded-full blur-2xl group-hover:bg-brand-cyan/[0.04] transition-all" />
+      <div className="loot-inner">
+        <div className="rarity-ribbon">{card.tipo}</div>
 
-        {/* Top: Header & Badges */}
         <div>
-          <div className="flex items-start justify-between gap-3 mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white group-hover:scale-105 group-hover:border-brand-cyan/40 transition-all flex-shrink-0">
-                {getStationIcon()}
-              </div>
-              <div>
-                <span className={`inline-block px-2.5 py-0.5 rounded-md text-[9px] font-black tracking-widest uppercase border ${badge.color} mb-1`}>
-                  {badge.label}
-                </span>
-                <h3 className="text-[19px] font-black text-white leading-tight">
-                  {station.nombre}
-                </h3>
-              </div>
-            </div>
+          <div className="rarity-tag">
+            <span className="gem" aria-hidden="true" />
+            <span>{card.tipo}</span>
           </div>
 
-          {/* Description */}
-          <p className="text-[13px] text-white/70 leading-relaxed mb-5 font-normal min-h-[40px]">
-            {station.descripcion}
-          </p>
-
-          {/* Features / Games Tags */}
-          <div className="mb-6">
-            <div className="text-[10px] font-bold tracking-[0.2em] text-brand-gray uppercase mb-2.5">
-              {isConsola ? 'Experiencia & Configuración' : 'Equipamiento & Dinámica'}
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {getFeatureList().map((item) => (
-                <span
-                  key={item}
-                  className="px-2.5 py-1 bg-white/[0.03] border border-white/[0.06] rounded-lg text-[11px] text-white/80 font-medium group-hover:border-white/10 transition-colors"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+          <div className="icon-box" aria-hidden="true">
+            {card.icono}
           </div>
+
+          <h3>{card.nombre}</h3>
+          <p>{card.descripcion}</p>
         </div>
 
-        {/* Bottom: Pricing & Access Mode */}
-        <div className="pt-4 border-t border-white/[0.07] mt-auto">
-          {/* Duration Selector Tabs */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between text-[11px] text-brand-gray font-semibold mb-1.5">
-              <span>Tarifa por tiempo</span>
-              <span className="text-white/60">Selecciona duración</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/[0.05]">
-              <button
-                type="button"
-                onClick={() => setSelectedDuration('30min')}
-                className={`py-2 px-3 rounded-lg text-[12px] font-bold tracking-wide transition-all ${
-                  selectedDuration === '30min'
-                    ? 'bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan shadow-[0_0_10px_rgba(0,229,255,0.15)]'
-                    : 'text-brand-gray hover:text-white hover:bg-white/[0.03]'
-                }`}
-              >
-                30 Minutos · $3.00
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedDuration('1hora')}
-                className={`py-2 px-3 rounded-lg text-[12px] font-bold tracking-wide transition-all ${
-                  selectedDuration === '1hora'
-                    ? 'bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan shadow-[0_0_10px_rgba(0,229,255,0.15)]'
-                    : 'text-brand-gray hover:text-white hover:bg-white/[0.03]'
-                }`}
-              >
-                1 Hora · $6.00
-              </button>
-            </div>
+        <div>
+          <div className="stat-row">
+            <span className="stat-label">TARIFA</span>
+            <span className="price-tag">$3 / $6</span>
           </div>
-
-          {/* Station Equipment / Spec Info Banner */}
-          <div className="mb-3.5 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/80">
-            <CheckIcon size={14} className="text-brand-cyan flex-shrink-0" />
-            <span className="text-[11px] font-semibold text-white/90">
-              {isConsola ? 'Controles DualSense / Joy-Cons y catálogo incluidos' : 'Equipamiento profesional completo incluido'}
+          <div style={{ marginTop: '6px', marginBottom: '4px' }}>
+            <span style={{ fontSize: '9px', color: '#6f6f7a', letterSpacing: '0.5px' }}>
+              30 MIN &nbsp;·&nbsp; 1 HORA — Pago en Caja
             </span>
           </div>
 
-          {/* Price Display & Cash-Register Notice */}
-          <div className="flex items-center justify-between pt-1">
-            <div>
-              <div className="text-[26px] font-black text-white leading-none">
-                ${currentPrice.toFixed(2)}
-              </div>
-              <div className="text-[10px] text-brand-gray mt-1 flex items-center gap-1">
-                <ClockIcon size={11} />
-                <span>por {selectedDuration === '30min' ? '30 minutos' : '1 hora de juego'}</span>
-              </div>
-            </div>
-
-            <div className="text-right">
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-cyan/90 bg-brand-cyan/10 px-3 py-1.5 rounded-lg border border-brand-cyan/20">
-                <ZapIcon size={12} />
-                Paga en Caja
-              </span>
-            </div>
+          <div className="drop-bar">
+            <div className="drop-fill" style={{ width: `${card.dropPercent}%` }} />
           </div>
         </div>
-      </article>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
@@ -170,19 +119,11 @@ function StationCard({ station }: { station: GamingStation }) {
    GAMING SECTION
    ────────────────────────────────────────────── */
 export function GamingSection() {
-  const [filter, setFilter] = useState<'todos' | 'consolas' | 'mesas'>('todos');
-
-  const filteredStations = gamingStations.filter((station) => {
-    if (filter === 'consolas') return station.tipo === 'consola';
-    if (filter === 'mesas') return station.tipo === 'mesa';
-    return true;
-  });
-
   return (
     <section id="gaming" className="relative py-24" aria-labelledby="gaming-heading">
       {/* Ambient background glows */}
-      <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] rounded-full bg-[#800028]/12 blur-[140px] -z-10" aria-hidden="true" />
-      <div className="absolute bottom-0 left-[-5%] w-[500px] h-[500px] rounded-full bg-brand-cyan/[0.05] blur-[130px] -z-10" aria-hidden="true" />
+      <div className="absolute top-0 right-[-10%] w-150 h-150 rounded-full bg-[#800028]/12 blur-[140px] -z-10" aria-hidden="true" />
+      <div className="absolute bottom-0 left-[-5%] w-125 h-125 rounded-full bg-brand-cyan/5 blur-[130px] -z-10" aria-hidden="true" />
 
       <div className="container-site">
         {/* Section Header */}
@@ -193,82 +134,37 @@ export function GamingSection() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <div className="section-label text-brand-cyan">Zona Gaming & Entretenimiento</div>
-          <h2 id="gaming-heading" className="section-title text-white mt-2">
-            <span className="section-title-deco">Consolas Next-Gen & Juegos de Salón</span>
+          <div className="w-11.5 h-1 rounded-full bg-linear-to-r from-brand-cyan to-brand-purple mb-4" />
+          <h2 id="gaming-heading" className="text-[40px] font-extrabold italic text-white leading-tight">
+            Consolas Next-Gen &amp; Juegos de Salón
           </h2>
-          <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-[620px] mt-4 font-normal">
-            Tarifa única, transparente y uniforme en todas las experiencias de juego: <strong className="text-white font-bold">$3.00 (30 minutos)</strong> y <strong className="text-white font-bold">$6.00 (1 hora)</strong> para consolas PS5, Nintendo Switch, mesa de billar, jenga gigante y tenis de mesa. Todo se adquiere directamente en caja al llegar.
+          <p className="text-[#b6b6c0] text-[15px] leading-relaxed mt-3">
+            Tarifa única en todas las experiencias:{' '}
+            <strong className="text-[#eaeaee]">$3.00 (30 minutos)</strong> y{' '}
+            <strong className="text-[#eaeaee]">$6.00 (1 hora)</strong>. Todo se adquiere en caja al llegar.
           </p>
         </motion.div>
 
-        {/* Pricing & Benefits Ribbon */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10"
-          aria-label="Precios y beneficios"
-        >
-          <div className="glass-card p-4 rounded-xl border border-white/[0.06] bg-[#12050e]/60 text-center">
-            <div className="text-[10px] font-black tracking-[0.2em] text-brand-gray uppercase mb-1">30 Minutos</div>
-            <div className="text-[24px] font-black text-brand-cyan leading-tight">$3.00</div>
-            <div className="text-[11px] text-brand-gray mt-0.5">Consolas & Mesas</div>
-          </div>
-
-          <div className="glass-card p-4 rounded-xl border border-white/[0.06] bg-[#12050e]/60 text-center">
-            <div className="text-[10px] font-black tracking-[0.2em] text-brand-gray uppercase mb-1">1 Hora</div>
-            <div className="text-[24px] font-black text-brand-cyan leading-tight">$6.00</div>
-            <div className="text-[11px] text-brand-gray mt-0.5">Consolas & Mesas</div>
-          </div>
-
-          <div className="glass-card p-4 rounded-xl border border-brand-purple/20 bg-brand-purple/10 text-center">
-            <div className="text-[10px] font-black tracking-[0.2em] text-brand-purple-light uppercase mb-1">Tarifa Única</div>
-            <div className="text-[24px] font-black text-brand-purple-light leading-tight">Universal</div>
-            <div className="text-[11px] text-white/70 mt-0.5">Mismo precio para todo</div>
-          </div>
-
-          <div className="glass-card p-4 rounded-xl border border-white/[0.06] bg-[#12050e]/60 text-center">
-            <div className="text-[10px] font-black tracking-[0.2em] text-brand-pink uppercase mb-1">Sin Reservas</div>
-            <div className="text-[24px] font-black text-white leading-tight">En Caja</div>
-            <div className="text-[11px] text-brand-gray mt-0.5">Llegas y juegas directo</div>
-          </div>
-        </motion.div>
-
-        {/* Filter Navigation Tabs */}
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            {[
-              { id: 'todos', label: 'Todas las Estaciones (5)' },
-              { id: 'consolas', label: 'Consolas PS5 & Switch' },
-              { id: 'mesas', label: 'Juegos de Salón' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setFilter(tab.id as typeof filter)}
-                className={`px-4 py-2 rounded-lg text-[13px] font-bold transition-all ${
-                  filter === tab.id
-                    ? 'bg-brand-pink text-white shadow-[0_0_15px_rgba(255,0,92,0.4)]'
-                    : 'text-brand-gray hover:text-white hover:bg-white/[0.04]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="text-[12px] text-brand-gray font-medium">
-            Mostrando <span className="text-white font-bold">{filteredStations.length}</span> experiencias de juego
-          </div>
-        </div>
-
-        {/* Stations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredStations.map((station) => (
-            <StationCard key={station.id} station={station} />
+        {/* Cards Grid — same as Promos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5.5">
+          {GAMING_CARDS.map((card, i) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="h-full"
+            >
+              <GamingLootCard card={card} />
+            </motion.div>
           ))}
         </div>
+
+        {/* Foot note */}
+        <p className="text-center text-[11px] text-[#6f6f7a] mt-11">
+          Tarifas expresadas en USD. El tiempo comienza a correr desde que se asigna la estación. Consulta disponibilidad en caja.
+        </p>
       </div>
     </section>
   );

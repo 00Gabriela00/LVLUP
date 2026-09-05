@@ -1,13 +1,36 @@
 import { motion } from 'framer-motion';
 import { promos } from '../../../infrastructure/data/initialData';
 import type { Promo } from '../../../infrastructure/data/initialData';
-import { FlameIcon } from '../icons/CustomIcons';
+import { FlameIcon, CocktailIcon, BurgerIcon, GamepadIcon } from '../icons/CustomIcons';
+import { Package, Sparkles, Trophy, Zap } from 'lucide-react';
+
+function getPromoIcon(icono?: string) {
+  switch (icono) {
+    case 'cocktail':
+    case '🍸':
+      return <CocktailIcon size={24} />;
+    case 'burger':
+    case '🍔':
+      return <BurgerIcon size={24} />;
+    case 'gamepad':
+    case '🎮':
+      return <GamepadIcon size={24} />;
+    case 'snack':
+    case '🍗':
+      return <Package size={24} />;
+    case 'trophy':
+      return <Trophy size={24} />;
+    case 'zap':
+      return <Zap size={24} />;
+    default:
+      return <Sparkles size={24} />;
+  }
+}
 
 function LootCard({ promo }: { promo: Promo }) {
   const c1 = promo.c1 || '#1a2a2e';
   const c2 = promo.c2 || '#5df0d8';
   const rareza = promo.rareza || 'COMUN';
-  const icono = promo.icono || '🎁';
   const dropFill = promo.dropPercent ?? 50;
 
   let statLabel = 'DISPONIBILIDAD';
@@ -41,8 +64,8 @@ function LootCard({ promo }: { promo: Promo }) {
             <span>{rareza}</span>
           </div>
 
-          <div className="icon-box" aria-hidden="true">
-            {icono}
+          <div className="icon-box text-[var(--c2)] shadow-[0_0_15px_rgba(0,229,255,0.15)]" aria-hidden="true">
+            {getPromoIcon(promo.icono)}
           </div>
 
           <h3>{promo.titulo}</h3>
@@ -73,16 +96,16 @@ function LootCard({ promo }: { promo: Promo }) {
    ────────────────────────────────────────────── */
 function PromoTicker() {
   const items = [
-    '2x1 Mojitos — Lun a Jue, 4pm a 7pm',
-    'Nave de Cotufas de Pollo 2x1 — $7',
-    'Gamer Pack: 1h Consola + Burger + Bebida — $12',
-    'Burgers 2x1 — Dom a Jue',
-    'Happy Hour — Cocteles Seleccionados',
-    '2x1 Mojitos — Lun a Jue, 4pm a 7pm',
-    'Nave de Cotufas de Pollo 2x1 — $7',
-    'Gamer Pack: 1h Consola + Burger + Bebida — $12',
-    'Burgers 2x1 — Dom a Jue',
-    'Happy Hour — Cocteles Seleccionados',
+    '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm',
+    'Cofre Popcorn Chicken 2x1 — $7',
+    'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12',
+    'Burgers Cyber Smash 2x1 — Dom a Jue',
+    'Happy Hour — Coctelería de Autor',
+    '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm',
+    'Cofre Popcorn Chicken 2x1 — $7',
+    'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12',
+    'Burgers Cyber Smash 2x1 — Dom a Jue',
+    'Happy Hour — Coctelería de Autor',
   ];
 
   return (

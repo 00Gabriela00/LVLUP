@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { requireAuth } from '../../core/authMiddleware';
 
 export const uploadRouter = Router();
 
@@ -48,7 +49,7 @@ const upload = multer({
  * POST /api/upload
  * Sube una imagen optimizada y devuelve la URL accesible
  */
-uploadRouter.post('/', upload.single('image'), (req: Request, res: Response) => {
+uploadRouter.post('/', requireAuth, upload.single('image'), (req: Request, res: Response) => {
   if (!req.file) {
     res.status(400).json({ error: 'No se ha proporcionado ningún archivo de imagen.' });
     return;

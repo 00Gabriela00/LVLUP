@@ -1137,3 +1137,264 @@
   }
 }
 
+/* ──────────────────────────────────────────────
+   ADMIN LOGIN INPUTS & AUTOFILL FIX
+   ────────────────────────────────────────────── */
+.admin-login-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.admin-login-input:-webkit-autofill,
+.admin-login-input:-webkit-autofill:hover, 
+.admin-login-input:-webkit-autofill:focus,
+.admin-login-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  caret-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ──────────────────────────────────────────────
+   MAGICUI ORBITING CIRCLES ANIMATION
+   ────────────────────────────────────────────── */
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit calc(var(--duration) * 1s) linear infinite;
+  will-change: transform;
+}
+
+/* ──────────────────────────────────────────────
+   CYBERPUNK GLITCH BUTTONS (HERO CTAS)
+   Fiel al diseño uiverse.io con fondos sólidos vibrantes
+   ────────────────────────────────────────────── */
+.cyber-btn-wrapper {
+  position: relative;
+  height: 48px;
+  min-width: 240px;
+  display: inline-block;
+  isolation: isolate; /* CRUCIAL: Garantiza que :before y :after no se pierdan detrás del fondo oscuro */
+}
+
+@media (max-width: 640px) {
+  .cyber-btn-wrapper {
+    width: 100%;
+    min-width: 100%;
+    height: 46px;
+  }
+}
+
+.cyber-btn {
+  --primary: #ff184c;
+  --shadow-primary: #fded00;
+  --color: #ffffff;
+  --font-size: 11px;
+  --shadow-primary-hue: 180;
+  --shadow-secondary-hue: 60;
+  --shadow-secondary: hsl(var(--shadow-secondary-hue), 90%, 60%);
+  --clip: polygon(11% 0, 95% 0, 100% 25%, 90% 90%, 95% 90%, 85% 90%, 85% 100%, 7% 100%, 0 80%);
+  --border: 4px;
+  --shimmy-distance: 5;
+  --clip-one: polygon(0 2%, 100% 2%, 100% 95%, 95% 95%, 95% 90%, 85% 90%, 85% 95%, 8% 95%, 0 70%);
+  --clip-two: polygon(0 78%, 100% 78%, 100% 100%, 95% 100%, 95% 90%, 85% 90%, 85% 100%, 8% 100%, 0 78%);
+  --clip-three: polygon(0 44%, 100% 44%, 100% 54%, 95% 54%, 95% 54%, 85% 54%, 85% 54%, 8% 54%, 0 54%);
+  --clip-four: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+  --clip-five: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+  --clip-six: polygon(0 40%, 100% 40%, 100% 85%, 95% 85%, 95% 85%, 85% 85%, 85% 85%, 8% 85%, 0 70%);
+  --clip-seven: polygon(0 63%, 100% 63%, 100% 80%, 95% 80%, 95% 80%, 85% 80%, 85% 80%, 8% 80%, 0 70%);
+
+  color: var(--color);
+  text-transform: uppercase;
+  font-size: var(--font-size);
+  letter-spacing: 2px;
+  position: relative;
+  font-weight: 900;
+  width: 100%;
+  height: 100%;
+  line-height: 48px;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 20px;
+}
+
+@media (max-width: 640px) {
+  .cyber-btn {
+    --font-size: 10px;
+    letter-spacing: 1.2px;
+    line-height: 46px;
+    padding: 0 14px;
+  }
+}
+
+/* Botón 1: Crimson Red con Sombra Amarillo Neón (Exacto uiverse #ff184c / #fded00) */
+.cyber-btn--crimson {
+  --primary: #ff184c;
+  --shadow-primary: #fded00;
+}
+
+/* Botón 2: Purple Eléctrico con Sombra Verde Neón (Exacto uiverse #8B00FF / #00e572) */
+.cyber-btn--purple {
+  --primary: #8B00FF;
+  --shadow-primary: #00e572;
+}
+
+.cyber-btn:after,
+.cyber-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip-path: var(--clip);
+}
+
+.cyber-btn:before {
+  background: var(--shadow-primary);
+  transform: translate(var(--border), 0);
+  z-index: 0;
+  box-shadow: 0 0 12px var(--shadow-primary);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cyber-btn:after {
+  background: var(--primary);
+  z-index: 1;
+  transition: background 0.2s ease;
+}
+
+.cyber-btn:hover:before {
+  transform: translate(calc(var(--border) * 1.5), 0);
+  filter: drop-shadow(0 0 8px var(--shadow-primary));
+}
+
+.cyber-btn:hover:after {
+  filter: brightness(1.1);
+}
+
+.cyber-btn .btn-text {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 900;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.cyber-btn__glitch {
+  position: absolute;
+  top: calc(var(--border) * -1);
+  left: calc(var(--border) * -1);
+  right: calc(var(--border) * -1);
+  bottom: calc(var(--border) * -1);
+  background: var(--shadow-primary);
+  color: #000000;
+  text-shadow: 2px 2px var(--shadow-primary), -2px -2px var(--shadow-secondary);
+  clip-path: var(--clip);
+  animation: cyber-glitch 2s infinite;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size);
+  font-weight: 900;
+  letter-spacing: 2px;
+  z-index: 3;
+}
+
+.cyber-btn:hover .cyber-btn__glitch {
+  display: flex;
+}
+
+.cyber-btn__glitch:before {
+  content: '';
+  position: absolute;
+  top: calc(var(--border) * 1);
+  right: calc(var(--border) * 1);
+  bottom: calc(var(--border) * 1);
+  left: calc(var(--border) * 1);
+  clip-path: var(--clip);
+  background: var(--primary);
+  z-index: -1;
+}
+
+@keyframes cyber-glitch {
+  0% {
+    clip-path: var(--clip-one);
+  }
+  2%, 8% {
+    clip-path: var(--clip-two);
+    transform: translate(calc(var(--shimmy-distance) * -1%), 0);
+  }
+  6% {
+    clip-path: var(--clip-two);
+    transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+  }
+  9% {
+    clip-path: var(--clip-two);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip-path: var(--clip-three);
+    transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+  }
+  13% {
+    clip-path: var(--clip-three);
+    transform: translate(0, 0);
+  }
+  14%, 21% {
+    clip-path: var(--clip-four);
+    transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+  }
+  25% {
+    clip-path: var(--clip-five);
+    transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+  }
+  30% {
+    clip-path: var(--clip-five);
+    transform: translate(calc(var(--shimmy-distance) * -1%), 0);
+  }
+  35%, 45% {
+    clip-path: var(--clip-six);
+    transform: translate(calc(var(--shimmy-distance) * -1%));
+  }
+  40% {
+    clip-path: var(--clip-six);
+    transform: translate(calc(var(--shimmy-distance) * 1%));
+  }
+  50% {
+    clip-path: var(--clip-six);
+    transform: translate(0, 0);
+  }
+  55% {
+    clip-path: var(--clip-seven);
+    transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+  }
+  60% {
+    clip-path: var(--clip-seven);
+    transform: translate(0, 0);
+  }
+  31%, 61%, 100% {
+    clip-path: var(--clip-four);
+  }
+}
+
+

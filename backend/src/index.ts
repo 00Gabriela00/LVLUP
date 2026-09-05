@@ -28,9 +28,12 @@ app.use(cors(corsOptions));
 // 4. Rate Limiter general de la API
 app.use(apiRateLimiter);
 
-// 5. Parser JSON con límite de tamaño para prevenir ataques DoS
+import { sanitizeInputs } from './core/sanitizer';
+
+// 5. Parser JSON con límite de tamaño para prevenir ataques DoS y sanitización profunda
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(sanitizeInputs);
 
 // 6. Verificación de Salud del Servidor
 app.get('/api/health', (req, res) => {

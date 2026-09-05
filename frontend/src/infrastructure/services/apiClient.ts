@@ -2,31 +2,8 @@ import type { MenuItem, MenuCategory, GamingStation, Promo, InfoGeneral } from '
 
 const API_BASE_URL = '/api';
 
-let cachedToken: string | null = null;
-
 async function getAuthHeaders(): Promise<HeadersInit> {
-  // 1. Obtener token de localStorage o memoria
-  let token = cachedToken || localStorage.getItem('lvlup_admin_token');
-
-  // 2. Si no hay token, autenticar automáticamente en segundo plano
-  if (!token) {
-    try {
-      const res = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'admin@lvlup.com', password: 'admin123' }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        token = data.token;
-        cachedToken = data.token;
-        if (token) localStorage.setItem('lvlup_admin_token', token);
-      }
-    } catch {
-      // fallback
-    }
-  }
-
+  const token = typeof window !== 'undefined' ? localStorage.getItem('lvlup_admin_token') : null;
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -384,5 +361,63 @@ export const apiClient = {
     } catch {
       return false;
     }
+  },
+
+  // ── AUTENTICACIÓN SEGURA ──
+  async login(email: string, password: string):Promise<{ success: boolean; token?: string; error?: string }> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Credenciales inválidas.' };
+      }
+      if (data.token) {
+        localStorage.setItem('lvlup_admin_token', data.token);
+      }
+      return { success: true, token: data.token };
+    } catch {
+      return { success: false, error: 'No se pudo conectar con el servidor de autenticación.' };
+    }
+  },
+
+  async getMe(): Promise<{ success: boolean; user?: any }> {
+    try {
+      const headers = await getAuthHeaders();
+      const res = await fetch(`${API_BASE_URL}/auth/me`, { headers });
+      if (!res.ok) {
+        localStorage.removeItem('lvlup_admin_token');
+        return { success: false };
+      }
+      const data = await res.json();
+      return { success: true, user: data };
+    } catch {
+      return { success: false };
+    }
+  },
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const headers = await getAuthHeaders();
+      const res = await fetch(`${API_BASE_URL}/auth/change-password`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Error al actualizar contraseña' };
+      }
+      return { success: true };
+    } catch {
+      return { success: false, error: 'Error de red al actualizar contraseña' };
+    }
+  },
+
+  logout(): void {
+    localStorage.removeItem('lvlup_admin_token');
   },
 };

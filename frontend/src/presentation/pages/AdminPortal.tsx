@@ -29,6 +29,11 @@ import {
   Loader2,
   AlertTriangle,
   Menu,
+  Eye,
+  EyeOff,
+  HelpCircle,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 type AdminTab = 'dashboard' | 'menu' | 'promos' | 'gaming' | 'info' | 'security';
@@ -89,6 +94,9 @@ export function AdminPortal() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
+  const [copiedCli, setCopiedCli] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
@@ -137,6 +145,9 @@ export function AdminPortal() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Business Info Local State
   const [localInfo, setLocalInfo] = useState(infoGeneral);
@@ -403,18 +414,39 @@ export function AdminPortal() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                required
-                disabled={isLocked || isLoggingIn}
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm disabled:bg-slate-100 disabled:cursor-not-allowed admin-login-input shadow-xs"
-              />
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                  Contraseña
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setIsForgotModalOpen(true)}
+                  className="text-xs text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                >
+                  ¿Olvidaste tu contraseña?
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type={showLoginPassword ? 'text' : 'password'}
+                  required
+                  disabled={isLocked || isLoggingIn}
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-2.5 pr-11 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm disabled:bg-slate-100 disabled:cursor-not-allowed admin-login-input shadow-xs"
+                />
+                {/* ver u ocultar clave */}
+                <button
+                  type="button"
+                  onClick={() => setShowLoginPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1 cursor-pointer transition-colors"
+                  aria-label={showLoginPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
+                  tabIndex={-1}
+                >
+                  {showLoginPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
 
             <button
@@ -444,6 +476,84 @@ export function AdminPortal() {
             </a>
           </div>
         </div>
+
+        {/* modal de recuperacion */}
+        {isForgotModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+            <div className="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-200 space-y-4 my-auto">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <HelpCircle size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900">Recuperación de Contraseña</h3>
+                    <p className="text-[11px] text-slate-500">Opciones de acceso para el Administrador</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsForgotModalOpen(false)}
+                  className="text-slate-400 hover:text-slate-600 text-sm font-bold cursor-pointer p-1"
+                  aria-label="Cerrar modal"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-3 text-xs text-slate-600">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <p className="font-bold text-slate-800 text-[12px] mb-1">Opción 1: Restablecimiento rápido por Consola</p>
+                  <p className="text-[11px] text-slate-500 mb-2">
+                    Si tienes acceso a la terminal del proyecto, ejecuta el comando para restaurar la contraseña inicial del admin:
+                  </p>
+                  <div className="flex items-center justify-between gap-2 bg-slate-900 text-slate-200 px-3 py-2 rounded-lg font-mono text-[11px]">
+                    <span>npm run db:setup</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText('npm run db:setup');
+                        setCopiedCli(true);
+                        setTimeout(() => setCopiedCli(false), 2000);
+                      }}
+                      className="text-cyan-400 hover:text-cyan-300 cursor-pointer flex items-center gap-1 font-sans text-[11px]"
+                    >
+                      {copiedCli ? <Check size={13} /> : <Copy size={13} />}
+                      <span>{copiedCli ? 'Copiado' : 'Copiar'}</span>
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-1.5">
+                    Restaura el usuario <strong className="text-slate-600">admin@lvlup.com</strong>.
+                  </p>
+                </div>
+
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <p className="font-bold text-slate-800 text-[12px] mb-1">Opción 2: Asistencia de Superadministrador</p>
+                  <p className="text-[11px] text-slate-500">
+                    Comunícate con el administrador principal del sistema para que genere una nueva contraseña o actualice el hash de acceso directamente en la base de datos PostgreSQL.
+                  </p>
+                </div>
+
+                <div className="p-3 bg-blue-50 rounded-xl border border-blue-100 text-blue-800 text-[11px]">
+                  <p className="font-semibold mb-0.5">Arquitectura para Producción:</p>
+                  <p className="text-blue-700">
+                    Para despliegues públicos se puede conectar un servicio transaccional (Resend o SendGrid) que genere enlaces seguros de un solo uso con expiración de 15 minutos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setIsForgotModalOpen(false)}
+                  className="w-full sm:w-auto px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs cursor-pointer"
+                >
+                  Entendido, Volver al Login
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -1343,39 +1453,69 @@ export function AdminPortal() {
               <form onSubmit={handlePasswordChange} className="space-y-4 text-xs">
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Contraseña Actual</label>
-                  <input
-                    type="password"
-                    required
-                    disabled={isSavingPassword}
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showCurrentPassword ? 'text' : 'password'}
+                      required
+                      disabled={isSavingPassword}
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowCurrentPassword((prev) => !prev)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                      tabIndex={-1}
+                    >
+                      {showCurrentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Nueva Contraseña</label>
-                  <input
-                    type="password"
-                    required
-                    disabled={isSavingPassword}
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Mínimo 8 caracteres"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showNewPassword ? 'text' : 'password'}
+                      required
+                      disabled={isSavingPassword}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Mínimo 8 caracteres"
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword((prev) => !prev)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                      tabIndex={-1}
+                    >
+                      {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Confirmar Nueva Contraseña</label>
-                  <input
-                    type="password"
-                    required
-                    disabled={isSavingPassword}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      required
+                      disabled={isSavingPassword}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm sm:text-xs disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
 
                 <button

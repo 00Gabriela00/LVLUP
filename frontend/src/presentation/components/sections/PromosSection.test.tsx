@@ -6,7 +6,7 @@ import { formatDias } from './promoUtils';
 describe('PromosSection', () => {
   it('renderiza el heading y la nota de pie', () => {
     render(<PromosSection />);
-    expect(screen.getByRole('heading', { name: /Promociones de la Semana/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Nuestras Promociones/i })).toBeInTheDocument();
     expect(screen.getByText(/Precios expresados en USD/i)).toBeInTheDocument();
   });
 

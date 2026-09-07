@@ -2,10 +2,10 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 
-// 1. Rate Limiting estricto para rutas de autenticación (Login)
+// rate limit para autenticacion
 export const authRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 10, // Máximo 10 intentos por IP
+  windowMs: 15 * 60 * 1000,
+  max: 10,
   message: {
     error: 'Demasiados intentos de acceso. Por seguridad, tu IP ha sido pausada temporalmente por 15 minutos.',
   },
@@ -13,19 +13,19 @@ export const authRateLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 2. Rate Limiting general para la API
+// rate limit general
 export const apiRateLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minuto
-  max: 120, // 120 peticiones por minuto por IP
+  windowMs: 60 * 1000,
+  max: 120,
   message: { error: 'Límite de peticiones excedido. Intenta nuevamente en unos segundos.' },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// 3. CORS seguro y restringido
+// opciones de cors
 export const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
-    // Permitir llamadas sin origen (apps móviles/Postman en dev) o dominios autorizados
+    // permitir origenes autorizados o llamadas locales
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:3000',
@@ -44,7 +44,7 @@ export const corsOptions: cors.CorsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
-// 4. Helmet con Content Security Policy (CSP) robusto y protección de cabeceras HTTP
+// cabeceras de seguridad con helmet
 export const configureSecurityHeaders = helmet({
   contentSecurityPolicy: {
     directives: {
@@ -61,11 +61,11 @@ export const configureSecurityHeaders = helmet({
   },
   crossOriginEmbedderPolicy: false,
   hsts: {
-    maxAge: 31536000, // 1 año de HSTS estricto
+    maxAge: 31536000,
     includeSubDomains: true,
     preload: true,
   },
-  hidePoweredBy: true, // Oculta 'X-Powered-By: Express'
+  hidePoweredBy: true,
   noSniff: true,
   xssFilter: true,
 });

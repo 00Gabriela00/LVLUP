@@ -85,7 +85,7 @@ export function GallerySection() {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center max-w-2xl mx-auto"
         >
-          <h2 id="experiencias-heading" className="section-title text-white mt-2">
+          <h2 id="experiencias-heading" className="section-title mt-2">
             <span className="section-title-deco">Dimensiones de la Experiencia</span>
           </h2>
           <p className="text-white/75 text-[1.05rem] leading-relaxed mt-4">

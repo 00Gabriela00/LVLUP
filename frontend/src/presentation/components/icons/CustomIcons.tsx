@@ -286,6 +286,21 @@ export function DiceIcon({ size = 20, className = '', strokeWidth = 1.75, 'aria-
   </>, '0 0 24 24', ariaLabel);
 }
 
+export function PingPongIcon({ size = 20, className = '', strokeWidth = 1.75, 'aria-label': ariaLabel }: IconProps) {
+  return iconBase(size, className, strokeWidth, <>
+    <circle cx="9" cy="9" r="6" />
+    <path d="M13.24 13.24l4.24 4.24a2 2 0 002.83-2.83l-4.24-4.24" />
+    <circle cx="18" cy="5" r="2" fill="currentColor" stroke="none" />
+  </>, '0 0 24 24', ariaLabel);
+}
+
+export function ChickenIcon({ size = 20, className = '', strokeWidth = 1.75, 'aria-label': ariaLabel }: IconProps) {
+  return iconBase(size, className, strokeWidth, <>
+    <path d="M15.5 8.5l-6 6c-2 2-5 2-7 0a4.95 4.95 0 010-7l6-6c2-2 5-2 7 0z" />
+    <path d="M18.5 11.5l3 3a2.12 2.12 0 01-3 3l-3-3" />
+  </>, '0 0 24 24', ariaLabel);
+}
+
 export function LogoIcon({ size = 40, className = '' }: { size?: number; className?: string }) {
   return (
     <svg

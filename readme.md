@@ -14,6 +14,7 @@
 ---
 
 ## 📖 Guía Rápida para Principiantes
+
 👉 **Si buscas una guía paso a paso explicada con peras y manzanas para instalar todo en 5 minutos, consulta:**  
 **[INSTRUCCIONES_INSTALACION.md](./INSTRUCCIONES_INSTALACION.md)**
 
@@ -22,6 +23,7 @@
 ## ✨ Características Principales
 
 ### 🍹 Experiencia Web del Cliente (Frontend)
+
 - **Diseño Cyber-Lounge Dark Crimson & Cyan:** Estética inmersiva de videojuegos con animaciones suaves (`framer-motion`), efectos glow y diseño 100% responsivo.
 - **Menú Gastronómico Interactivo con Tabs:** Filtrado por Cócteles de Autor, Burgers Angus 180g, Sushi Rolls Especiales, Snacks & Cervezas.
 - **Zona Gaming & Tarifas:** Tarifas actualizadas por 30m / 1h para consolas Next-Gen (PlayStation 5 en 4K HDR, Nintendo Switch Lounge) con catálogo de juegos.
@@ -30,6 +32,7 @@
 - **Carrito de Compras & Checkout WhatsApp:** Pedidos directos desglosados en USD ($) con notas especiales para la barra y mesa.
 
 ### 👑 Panel de Administración CMS en Vivo (`/admin`)
+
 - **Gestión Completa de Menú:** Crear, editar precios, descripciones, categorías, disponibilidad y destacados.
 - **Subida y Compresión de Fotos Automática:** Optimización instantánea de imágenes subidas desde PC o móvil.
 - **Gestión de Consolas y Videojuegos:** Actualización de precios por tiempo y lista de juegos disponibles.
@@ -42,6 +45,7 @@
 ## 🚀 Inicio Rápido (Quick Start)
 
 ### 1. Servidor Backend
+
 ```bash
 cd backend
 npm install
@@ -50,16 +54,19 @@ npx prisma db push
 npm run seed
 npm run dev
 ```
-*Servidor activo en: `http://localhost:3000`*
+
+_Servidor activo en: `http://localhost:3000`_
 
 ### 2. Aplicación Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Web activa en: `http://localhost:5173`*  
-*Panel de administración: `http://localhost:5173/admin`*
+
+_Web activa en: `http://localhost:5173`_  
+_Panel de administración: `http://localhost:5173/admin`_
 
 ---
 

@@ -365,8 +365,8 @@ export function MenuSection() {
           {/* Section Header */}
           <div className="mb-12">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <h2 id="menu-heading" className="section-title text-white mt-2">
+              <div className="flex-1 text-center">
+                <h2 id="menu-heading" className="section-title mt-2 text-center">
                   {isAdminMode ? (
                     <span className="text-brand-purple-light">Gestión de Menú</span>
                   ) : (
@@ -382,31 +382,15 @@ export function MenuSection() {
               )}
             </div>
 
-            <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-140 mt-4 font-normal">
+            <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-140 mx-auto mt-4 font-normal text-center">
               Desde cocteles de autor galácticos hasta burgers artesanales, rolls de sushi y snacks para compartir.
             </p>
           </div>
 
           {/* Search + Tabs */}
-          <div className="flex flex-col gap-4 mb-9">
-            {/* Search */}
-            <div className="relative max-w-sm">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-gray pointer-events-none" aria-hidden="true">
-                <SearchIcon size={16} />
-              </div>
-              <input
-                type="search"
-                placeholder="Buscar por plato, ingrediente o etiqueta..."
-                value={searchQuery}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/4 hover:bg-white/6 border border-white/8 focus:border-brand-cyan/50 rounded-xl pl-10 pr-4 py-3 text-[13px] text-white placeholder:text-brand-gray outline-none transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
-                aria-label="Buscar en el menu"
-                id="menu-search"
-              />
-            </div>
-
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-9 w-full">
             {/* Tabs */}
-            <div className="tab-nav" role="tablist" aria-label="Categorias del menu">
+            <div className="tab-nav w-full md:w-auto" role="tablist" aria-label="Categorias del menu">
               {TABS.map(({ key, label, Icon }) => (
                 <button
                   key={key}
@@ -421,6 +405,22 @@ export function MenuSection() {
                   {label}
                 </button>
               ))}
+            </div>
+
+            {/* Search */}
+            <div className="relative w-full md:max-w-xs shrink-0">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-gray pointer-events-none" aria-hidden="true">
+                <SearchIcon size={16} />
+              </div>
+              <input
+                type="search"
+                placeholder="Buscar plato, ingrediente..."
+                value={searchQuery}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-white/4 hover:bg-white/6 border border-white/8 focus:border-brand-cyan/50 focus:bg-brand-cyan/5 rounded-xl pl-10 pr-4 py-3 text-[13px] text-white placeholder:text-brand-gray outline-none transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)] focus:shadow-[0_0_16px_rgba(0,229,255,0.25)]"
+                aria-label="Buscar en el menu"
+                id="menu-search"
+              />
             </div>
           </div>
 

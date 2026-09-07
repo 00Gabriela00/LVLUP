@@ -36,7 +36,7 @@ export function LocationSection() {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center"
         >
-          <h2 id="contacto-heading" className="section-title text-white mt-2">
+          <h2 id="contacto-heading" className="section-title mt-2">
             <span className="section-title-deco">Ubicación & Horarios</span>
           </h2>
           <p className="text-white/75 text-[1.05rem] leading-relaxed max-w-135 mx-auto mt-4 font-normal">
@@ -55,8 +55,12 @@ export function LocationSection() {
             className="lg:col-span-6 flex flex-col justify-between gap-6"
           >
             {/* Venue Location Card */}
-            <div className="rounded-3xl bg-[#0e040c]/85 border border-white/8 p-7 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col justify-between flex-1">
-              <div>
+            <div
+              className="loot svc-loot flex-1"
+              style={{ '--c1': '#13141f', '--c2': '#00E5FF' } as React.CSSProperties}
+            >
+              <div className="loot-inner relative flex flex-col justify-between h-full p-7">
+                <div>
                 <div className="flex items-center justify-between gap-3 mb-5">
                   <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/25 flex items-center justify-center text-brand-cyan shadow-[0_0_20px_rgba(0,229,255,0.15)]">
                     <MapPinIcon size={22} aria-hidden="true" />
@@ -94,6 +98,7 @@ export function LocationSection() {
                 <span>Cómo Llegar en Google Maps</span>
                 <span className="text-brand-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true">↗</span>
               </a>
+              </div>
             </div>
 
             {/* Structured Contact Actions */}
@@ -138,9 +143,11 @@ export function LocationSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 rounded-3xl bg-[#0e040c]/85 border border-white/8 p-7 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+            className="lg:col-span-6 loot svc-loot h-full"
+            style={{ '--c1': '#13141f', '--c2': '#F43F6E' } as React.CSSProperties}
           >
-            <div>
+            <div className="loot-inner relative flex flex-col justify-between h-full p-7">
+              <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-brand-pink/10 border border-brand-pink/25 flex items-center justify-center text-brand-pink shadow-[0_0_20px_rgba(255,0,92,0.15)]">
                   <ClockIcon size={22} aria-hidden="true" />
@@ -193,6 +200,7 @@ export function LocationSection() {
             <div className="pt-5 border-t border-white/6 mt-6 flex items-center justify-between text-[11.5px] text-white/50">
               <span>Atención directa en barra y mesas</span>
               <span className="text-white/75 font-bold">Precios en USD</span>
+            </div>
             </div>
           </motion.div>
         </div>

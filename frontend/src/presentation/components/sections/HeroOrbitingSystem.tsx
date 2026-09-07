@@ -25,7 +25,7 @@ export function HeroOrbitingSystem() {
   const outerIconSize = isMobile ? 32 : 39;
 
   return (
-    <div className="relative flex h-[340px] sm:h-[460px] lg:h-[480px] w-[340px] sm:w-[460px] lg:w-[480px] mx-auto items-center justify-center select-none isolate">
+    <div className="relative flex h-85 sm:h-115 lg:h-120 w-85 sm:w-115 lg:w-120 mx-auto items-center justify-center select-none isolate">
       {/* ── AMBIENT NEON BLUE GLOW BEHIND ORBIT (Tenue, elegante y permanente) ── */}
       {/* Capa 1: Aura amplia difuminada azul neón tenue */}
       <div 
@@ -38,7 +38,7 @@ export function HeroOrbitingSystem() {
       />
       {/* Capa 2: Resplandor centrado sutil que resalta las órbitas */}
       <div 
-        className="absolute w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] rounded-full pointer-events-none z-0"
+        className="absolute w-75 h-75 sm:w-105 sm:h-105 rounded-full pointer-events-none z-0"
         style={{
           background: 'radial-gradient(circle at center, rgba(0, 229, 255, 0.22) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(8, 145, 178, 0.03) 70%, transparent 85%)',
           filter: 'blur(80px)',

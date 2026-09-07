@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { Gamepad2, Gamepad, Circle, Layers } from 'lucide-react';
+import { PingPongIcon } from '../icons/CustomIcons';
 
 /* ──────────────────────────────────────────────
    GAMING STATIONS DATA
@@ -8,7 +10,7 @@ interface GamingCard {
   nombre: string;
   descripcion: string;
   tipo: string;   // rareza equivalente
-  icono: string;
+  icono: React.ReactNode;
   c1: string;
   c2: string;
   dropPercent: number;
@@ -20,7 +22,7 @@ const GAMING_CARDS: GamingCard[] = [
     nombre: 'PlayStation 5',
     descripcion: 'Poder gráfico 4K HDR, audio 3D y mandos DualSense con gatillos adaptativos.',
     tipo: 'NEXT-GEN',
-    icono: '🎮',
+    icono: <Gamepad2 size={26} />,
     c1: '#0a1e22',
     c2: '#35e7ff',
     dropPercent: 95,
@@ -30,7 +32,7 @@ const GAMING_CARDS: GamingCard[] = [
     nombre: 'Nintendo Switch',
     descripcion: 'Diversión cooperativa instantánea para grupos con mandos Joy-Con inalámbricos.',
     tipo: 'LOUNGE',
-    icono: '🕹️',
+    icono: <Gamepad size={26} />,
     c1: '#160a22',
     c2: '#b26bff',
     dropPercent: 80,
@@ -40,7 +42,7 @@ const GAMING_CARDS: GamingCard[] = [
     nombre: 'Mesa de Billar',
     descripcion: 'Mesa reglamentaria con paño de alta precisión, tacos de madera y set completo.',
     tipo: 'PROFESIONAL',
-    icono: '🎱',
+    icono: <Circle size={26} />,
     c1: '#200710',
     c2: '#ff4d6d',
     dropPercent: 70,
@@ -50,7 +52,7 @@ const GAMING_CARDS: GamingCard[] = [
     nombre: 'Jenga Gigante XXL',
     descripcion: 'Bloques de madera maciza a escala gigante. Pulso, tensión y diversión en grupo.',
     tipo: 'ESTRATEGIA',
-    icono: '🪵',
+    icono: <Layers size={26} />,
     c1: '#1e1200',
     c2: '#ffb84d',
     dropPercent: 65,
@@ -58,9 +60,9 @@ const GAMING_CARDS: GamingCard[] = [
   {
     id: 'pingpong',
     nombre: 'Ping Pong',
-    descripcion: 'Mesa reglamentaria para duelos 1v1 o dobles con paletas pro y pelotas incluidas.',
-    tipo: 'TENIS DE MESA',
-    icono: '🏓',
+    descripcion: 'Mesas profesionales de rebote rápido, paletas de control avanzado y mallas tensas.',
+    tipo: 'TORNEO',
+    icono: <PingPongIcon size={26} />,
     c1: '#071a08',
     c2: '#7be07e',
     dropPercent: 75,
@@ -87,7 +89,19 @@ function GamingLootCard({ card }: { card: GamingCard }) {
             <span>{card.tipo}</span>
           </div>
 
-          <div className="icon-box" aria-hidden="true">
+          <div
+            className="flex items-center justify-center mb-6 mt-4"
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "12px",
+              background: `linear-gradient(145deg, ${card.c2}33, ${card.c2}0d)`,
+              border: `1px solid ${card.c2}66`,
+              boxShadow: `0 0 24px ${card.c2}55`,
+              color: card.c2,
+            }}
+            aria-hidden="true"
+          >
             {card.icono}
           </div>
 
@@ -134,11 +148,9 @@ export function GamingSection() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <div className="w-11.5 h-1 rounded-full bg-linear-to-r from-brand-cyan to-brand-purple mb-4" />
-          <h2 id="gaming-heading" className="text-[40px] font-extrabold italic text-white leading-tight">
-            Consolas Next-Gen &amp; Juegos de Salón
-          </h2>
-          <p className="text-[#b6b6c0] text-[15px] leading-relaxed mt-3">
+          <h2 id="gaming-heading" className="section-title text-center mb-10">Consolas Next-Gen &amp; Juegos de Salón</h2>
+          <div className="w-11.5 h-1 rounded-full bg-[#d4004d] mx-auto mt-4" />
+          <p className="text-[#b6b6c0] text-[15px] leading-relaxed mt-3 text-center">
             Tarifa única en todas las experiencias:{' '}
             <strong className="text-[#eaeaee]">$3.00 (30 minutos)</strong> y{' '}
             <strong className="text-[#eaeaee]">$6.00 (1 hora)</strong>. Todo se adquiere en caja al llegar.

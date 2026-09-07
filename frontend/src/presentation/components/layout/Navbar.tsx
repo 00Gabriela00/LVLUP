@@ -97,9 +97,8 @@ export function Navbar() {
         }`}
         role="banner"
       >
-        <div className="container-site">
-          <nav
-            className={`flex items-center justify-between px-5 py-2.5 rounded-2xl transition-all duration-300 ${
+        <div className="container-site">          <nav
+            className={`relative flex items-center justify-between px-5 py-2.5 rounded-2xl transition-all duration-300 ${
               isScrolled
                 ? 'bg-[#050508]/85 backdrop-blur-xl border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(0,229,255,0.04)]'
                 : 'bg-[#050508]/60 backdrop-blur-md border border-white/4'
@@ -124,8 +123,8 @@ export function Navbar() {
               </div>
             </a>
 
-            {/* Navegacion de escritorio con pill dinamico */}
-            <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-white/2 border border-white/3" role="navigation">
+            {/* Navegacion de escritorio con pill dinamico — centrado absoluto */}
+            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl" role="navigation">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -133,17 +132,17 @@ export function Navbar() {
                     key={link.id}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.id)}
-                    className={`relative px-4 py-2 rounded-lg text-[13px] font-semibold tracking-wide transition-all duration-200 cursor-pointer select-none ${
+                    className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer select-none ${
                       isActive
                         ? 'text-brand-cyan font-bold text-glow-cyan'
-                        : 'text-brand-gray hover:text-white hover:bg-white/4'
+                        : 'text-gray-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {/* Pill background dinamico detras de tab activo */}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavPill"
-                        className="absolute inset-0 rounded-lg bg-linear-to-r from-brand-cyan/15 via-brand-purple/10 to-brand-pink/15 border border-brand-cyan/30 shadow-[0_0_16px_rgba(0,229,255,0.18)] -z-10"
+                        className="absolute inset-0 rounded-full bg-linear-to-r from-brand-cyan/15 via-brand-purple/10 to-brand-pink/15 border border-brand-cyan/30 shadow-[0_0_16px_rgba(0,229,255,0.18)] -z-10"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}

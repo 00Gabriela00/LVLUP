@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { promos } from '../../../infrastructure/data/initialData';
 import type { Promo } from '../../../infrastructure/data/initialData';
-import { FlameIcon, CocktailIcon, BurgerIcon, GamepadIcon } from '../icons/CustomIcons';
+import { CocktailIcon, BurgerIcon, GamepadIcon, ChickenIcon } from '../icons/CustomIcons';
 import { Package, Sparkles, Trophy, Zap } from 'lucide-react';
+import { formatDias } from './promoUtils';
 
 function getPromoIcon(icono?: string) {
   switch (icono) {
@@ -17,7 +18,7 @@ function getPromoIcon(icono?: string) {
       return <GamepadIcon size={24} />;
     case 'snack':
     case '🍗':
-      return <Package size={24} />;
+      return <ChickenIcon size={24} />;
     case 'trophy':
       return <Trophy size={24} />;
     case 'zap':
@@ -45,7 +46,7 @@ function LootCard({ promo }: { promo: Promo }) {
     statValue = `${promo.horaInicio} – ${promo.horaFin}`;
   } else if (promo.dias && promo.dias.length > 0) {
     statLabel = 'DIAS';
-    statValue = promo.dias.length >= 4 ? 'Dom – Jue' : promo.dias.join(', ');
+    statValue = formatDias(promo.dias);
   }
 
   return (
@@ -64,7 +65,7 @@ function LootCard({ promo }: { promo: Promo }) {
             <span>{rareza}</span>
           </div>
 
-          <div className="icon-box text-[var(--c2)] shadow-[0_0_15px_rgba(0,229,255,0.15)]" aria-hidden="true">
+          <div className="icon-box text-(--c2) shadow-[0_0_15px_rgba(0,229,255,0.15)]" aria-hidden="true">
             {getPromoIcon(promo.icono)}
           </div>
 
@@ -96,25 +97,25 @@ function LootCard({ promo }: { promo: Promo }) {
    ────────────────────────────────────────────── */
 function PromoTicker() {
   const items = [
-    '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm',
-    'Cofre Popcorn Chicken 2x1 — $7',
-    'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12',
-    'Burgers Cyber Smash 2x1 — Dom a Jue',
-    'Happy Hour — Coctelería de Autor',
-    '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm',
-    'Cofre Popcorn Chicken 2x1 — $7',
-    'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12',
-    'Burgers Cyber Smash 2x1 — Dom a Jue',
-    'Happy Hour — Coctelería de Autor',
+    { text: '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm', icon: <CocktailIcon size={14} /> },
+    { text: 'Cofre Popcorn Chicken 2x1 — $7', icon: <ChickenIcon size={14} /> },
+    { text: 'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12', icon: <GamepadIcon size={14} /> },
+    { text: 'Burgers Cyber Smash 2x1 — Dom a Jue', icon: <BurgerIcon size={14} /> },
+    { text: 'Happy Hour — Coctelería de Autor', icon: <CocktailIcon size={14} /> },
+    { text: '2x1 Cocteles Galácticos — Lun a Jue, 4pm a 7pm', icon: <CocktailIcon size={14} /> },
+    { text: 'Cofre Popcorn Chicken 2x1 — $7', icon: <ChickenIcon size={14} /> },
+    { text: 'Gamer Pack: 1h Consola + Burger 180g + Bebida — $12', icon: <GamepadIcon size={14} /> },
+    { text: 'Burgers Cyber Smash 2x1 — Dom a Jue', icon: <BurgerIcon size={14} /> },
+    { text: 'Happy Hour — Coctelería de Autor', icon: <CocktailIcon size={14} /> },
   ];
 
   return (
-    <div className="ticker-container" aria-label="Promociones activas" role="marquee">
-      <div className="ticker-track" aria-hidden="true">
+    <div className="ticker-container" aria-hidden="true">
+      <div className="ticker-track">
         {items.map((item, i) => (
           <span key={i} className="flex items-center gap-3 text-white text-[12px] font-bold uppercase tracking-widest whitespace-nowrap">
-            <FlameIcon size={12} className="text-white opacity-70" />
-            {item}
+            <span className="text-brand-cyan opacity-80">{item.icon}</span>
+            {item.text}
           </span>
         ))}
       </div>
@@ -140,13 +141,11 @@ export function PromosSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-12 max-w-175"
+            className="mb-12 max-w-175 mx-auto"
           >
-            <div className="w-11.5 h-1 rounded-full bg-linear-to-r from-brand-cyan to-brand-purple mb-4" />
-            <h2 id="promos-heading" className="text-[40px] font-extrabold italic text-white leading-tight">
-              Promociones de la Semana
-            </h2>
-            <p className="text-[#b6b6c0] text-[15px] leading-relaxed mt-3">
+            <h2 id="promos-heading" className="section-title text-center">Nuestras Promociones</h2>
+            <div className="w-11.5 h-1 rounded-full bg-[#d4004d] mx-auto mt-4" />
+            <p className="text-[#b6b6c0] text-[15px] leading-relaxed mt-3 text-center">
               Precios especiales, combos exclusivos y deals que no puedes dejar pasar. Pregunta en barra por las promos del dia.
             </p>
           </motion.div>

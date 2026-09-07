@@ -149,34 +149,34 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 'sn3', nombre: 'Varitas de Maná (Tequeños x6)', descripcion: '6 Tequeños tradicionales dorados y crujientes rellenos de abundante queso blanco derretido, servidos con salsa tártara casera',
-    precio: 7.00, categoria: 'snacks', disponible: true, popular: true,
+    precio: 7.00, categoria: 'snacks', disponible: true, popular: true, foto: '/images/snacks/menu_tequenos.png',
     etiquetas: ['Tequeños', 'Queso', 'Popular'], ingredientes: ['Masa Artesanal', 'Queso Blanco', 'Salsa Tártara']
   },
   {
     id: 'sn4', nombre: 'Alitas Fénix BBQ Glaseadas', descripcion: '8 Alitas de pollo doradas glaseadas en salsa barbacoa ahumada artesanal con semillas de sésamo, bastones de apio y aderezo ranch',
-    precio: 8.00, categoria: 'snacks', disponible: true,
+    precio: 8.00, categoria: 'snacks', disponible: true, foto: '/images/snacks/menu_alitas_bbq.png',
     etiquetas: ['Alitas', 'BBQ Ahumada'], ingredientes: ['Alitas de Pollo', 'Salsa BBQ Ahumada', 'Bastones de Apio', 'Aderezo Ranch']
   },
 
   // ── SERVICIOS DE LICORES (4) ─────────────────────
   {
     id: 'sv1', nombre: 'Servicio Old Parr 12 Años Blended Scotch', descripcion: 'Botella de whisky escocés 12 años con hielera, vasos y acompañantes',
-    precio: 45.00, categoria: 'servicios', disponible: true, popular: true,
+    precio: 45.00, categoria: 'servicios', disponible: true, popular: true, foto: '/images/servicios/menu_oldparr.png',
     etiquetas: ['Premium', 'Whisky Escocés']
   },
   {
     id: 'sv2', nombre: 'Servicio Buchanan\'s 12 Años De Luxe', descripcion: 'Botella de Blended Scotch whisky suave con hielera y servicio de barra completo',
-    precio: 45.00, categoria: 'servicios', disponible: true, popular: true,
+    precio: 45.00, categoria: 'servicios', disponible: true, popular: true, foto: '/images/servicios/menu_buchanans.png',
     etiquetas: ['Premium', 'Whisky Escocés']
   },
   {
     id: 'sv3', nombre: 'Servicio Ron Cacique 500 Extra Añejo', descripcion: 'Ron venezolano reserva especial con servicio de hielo, limones y refrescos',
-    precio: 25.00, categoria: 'servicios', disponible: true,
+    precio: 25.00, categoria: 'servicios', disponible: true, foto: '/images/servicios/menu_ron_cacique.png',
     etiquetas: ['Ron', 'Venezolano']
   },
   {
     id: 'sv4', nombre: 'Balde Corona Extra (Pack 6 Heladas)', descripcion: 'Balde con hielo y 6 cervezas Corona bien frías con rodajas de limón para compartir',
-    precio: 15.00, categoria: 'servicios', disponible: true, popular: true,
+    precio: 15.00, categoria: 'servicios', disponible: true, popular: true, foto: '/images/servicios/menu_balde_corona.png',
     etiquetas: ['Cerveza', 'Pack 6']
   },
 ];

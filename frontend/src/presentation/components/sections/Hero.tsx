@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronDownIcon } from '../icons/CustomIcons';
-import { HeroOrbitingSystem } from './HeroOrbitingSystem';
+import heroImg from '../../../assets/hero_img.png';
 
 /* ──────────────────────────────────────────────
    HERO SECTION — Ultra-Premium Dark Crimson Cyberpunk Layout
@@ -31,31 +31,43 @@ export function Hero() {
       </div>
 
       <div className="container-site">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-12 items-center pt-10 lg:pt-0">
           {/* ── Left Column: Main Headline & Info (Expanded nicely to the right) ── */}
           <motion.div
-            className="lg:col-span-7 xl:col-span-7"
+            className="lg:col-span-7 xl:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Main Heading */}
-            <h1 id="hero-heading" className="mb-5 sm:mb-6 tracking-tight max-w-2xl">
-              <span className="block text-[clamp(2.7rem,5.8vw,5.8rem)] font-black italic leading-[0.92] text-white drop-shadow-[0_4px_30px_rgba(255,255,255,0.15)]">
+            <h1 id="hero-heading" className="mb-5 sm:mb-6 tracking-tight max-w-2xl mx-auto lg:mx-0">
+              <span
+                className="block text-[clamp(2.7rem,5.8vw,5.8rem)] font-black italic tracking-tight leading-[0.92] text-white drop-shadow-[0_4px_30px_rgba(255,255,255,0.15)]"
+                style={{ fontFamily: "'Chakra Petch', sans-serif" }}
+              >
                 LVL UP
               </span>
-              <span className="block text-[clamp(2.7rem,5.8vw,5.8rem)] font-black italic leading-[0.92] text-brand-cyan text-glow-cyan drop-shadow-[0_0_35px_rgba(0,229,255,0.65)]">
+              <span
+                className="block text-[clamp(2.7rem,5.8vw,5.8rem)] font-black italic tracking-tight leading-[0.92] text-brand-cyan"
+                style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  textShadow: '0 0 8px #00E5FF, 0 0 20px #00E5FF, 0 0 40px #00E5FF',
+                }}
+              >
                 YOUR NIGHT
               </span>
             </h1>
 
             {/* High Impact Copy Alien / Cyber-Lounge */}
-            <p className="text-sm sm:text-base lg:text-[17px] text-white/90 leading-relaxed sm:leading-[1.75] max-w-xl font-normal mb-6 sm:mb-9">
-              Traspasa la atmósfera convencional. <strong className="text-white font-semibold">Coctelería de autor galáctica</strong>, gastronomía interestelar de alto nivel, <strong className="text-white font-semibold">consolas Next-Gen</strong> y mesas de juego en una experiencia inmersiva de otro planeta.
+            <p className="text-sm sm:text-base lg:text-[17px] text-gray-200 leading-relaxed sm:leading-[1.75] max-w-xl font-normal mb-6 sm:mb-9 mx-auto lg:mx-0">
+              Traspasa la atmósfera convencional.{' '}
+              <strong className="text-white font-bold">Coctelería de autor galáctica</strong>,{' '}
+              gastronomía interestelar de alto nivel,{' '}
+              <strong className="text-cyan-300 font-bold">consolas Next-Gen</strong> y mesas de juego en una experiencia inmersiva de otro planeta.
             </p>
 
             {/* Cyberpunk Glitch Action Buttons CTAs (Fiel a uiverse.io con fondos sólidos y sin espacios raros) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5 w-full sm:w-auto pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 sm:gap-5 w-full sm:w-auto pt-1">
               {/* Button 1: Explorar Menú Galáctico (Crimson Red / Yellow Shadow) */}
               <div className="cyber-btn-wrapper">
                 <a
@@ -90,14 +102,30 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* ── Right Column: MagicUI Cosmic Orbiting Circles System (5 cols) ── */}
+          {/* ── Right Column: Hero Image ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 xl:col-span-5 relative mt-6 lg:mt-0 flex items-center justify-center"
           >
-            <HeroOrbitingSystem />
+            {/* Ambient glow behind image */}
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none -z-10"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, rgba(14, 165, 233, 0.08) 40%, transparent 70%)',
+                filter: 'blur(60px)',
+                transform: 'scale(1.2)',
+              }}
+              aria-hidden="true"
+            />
+            <img
+              src={heroImg}
+              alt="PS5 con coctelería y gaming — LVL UP Game Bar"
+              className="w-full max-w-md lg:max-w-none select-none"
+              style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 30px rgba(0,229,255,0.15))' }}
+              draggable={false}
+            />
           </motion.div>
         </div>
 

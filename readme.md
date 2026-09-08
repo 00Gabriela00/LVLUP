@@ -1,120 +1,150 @@
-# 🎮 LVL UP — Game Bar & Gastro-Lounge Digital Platform
+# LVLUP — Game Bar & Gastro-Lounge Digital Platform
 
-> **Plataforma Full-Stack integral para LVL UP Game Bar**: Web interactiva de alto impacto visual (Cyber-lounge / Dark Crimson), menú digital interactivo con carrito de compras y checkout por WhatsApp, panel de administración CMS en tiempo real para gestión total del negocio sin tocar código.
+Plataforma full-stack empresarial desarrollada para **LVLUP Game Bar & Lounge**. Integra una aplicación web interactiva de alto rendimiento visual orientada a clientes, catálogo gastronómico dinámico, sistema de promociones en tiempo real y un panel de administración centralizado (CMS) con autenticación basada en tokens JWT y almacenamiento en PostgreSQL.
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Prisma ORM](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-
----
-
-## 📖 Guía Rápida para Principiantes
-
-👉 **Si buscas una guía paso a paso explicada con peras y manzanas para instalar todo en 5 minutos, consulta:**  
-**[INSTRUCCIONES_INSTALACION.md](./INSTRUCCIONES_INSTALACION.md)**
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React 19](https://img.shields.io/badge/React-19.2-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.1-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.3-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-43853D?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-5.2-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Prisma ORM](https://img.shields.io/badge/Prisma-7.9-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-316192?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 
 ---
 
-## ✨ Características Principales
+## Modulos del Sistema
 
-### 🍹 Experiencia Web del Cliente (Frontend)
+### 1. Plataforma Web para Clientes (Frontend SPA)
+- **Interfaz Inmersiva:** Estructura visual basada en Dark UI Cyberpunk con tipografía Chakra Petch y transiciones aceleradas por hardware (`framer-motion`).
+- **Menu Digital Interactivo:** Filtrado en memoria por categorías (Coctelería de Autor, Hamburguesas Gourmet, Sushi, Snacks y Servicios de Botellas).
+- **Tarifario Gaming:** Visualización de estaciones PlayStation 5 y Nintendo Switch con precios por bloques de 30 y 60 minutos.
+- **Modulo de Promociones:** Ticker informativo continuo y tarjetas de beneficios semanales calculadas dinámicamente.
+- **Optimizacion SEO & OpenGraph:** Integración de metadatos estandarizados, Twitter Cards, Schema.org (JSON-LD para BarOrPub), `robots.txt` y `sitemap.xml`.
 
-- **Diseño Cyber-Lounge Dark Crimson & Cyan:** Estética inmersiva de videojuegos con animaciones suaves (`framer-motion`), efectos glow y diseño 100% responsivo.
-- **Menú Gastronómico Interactivo con Tabs:** Filtrado por Cócteles de Autor, Burgers Angus 180g, Sushi Rolls Especiales, Snacks & Cervezas.
-- **Zona Gaming & Tarifas:** Tarifas actualizadas por 30m / 1h para consolas Next-Gen (PlayStation 5 en 4K HDR, Nintendo Switch Lounge) con catálogo de juegos.
-- **Promociones Activas & Happy Hours:** Banners dinámicos con horarios y días específicos (ej. 2x1 en cócteles).
-- **Galería Visual & Ubicación:** Horarios de atención en vivo por día, mapa interactivo y redes sociales.
-- **Carrito de Compras & Checkout WhatsApp:** Pedidos directos desglosados en USD ($) con notas especiales para la barra y mesa.
-
-### 👑 Panel de Administración CMS en Vivo (`/admin`)
-
-- **Gestión Completa de Menú:** Crear, editar precios, descripciones, categorías, disponibilidad y destacados.
-- **Subida y Compresión de Fotos Automática:** Optimización instantánea de imágenes subidas desde PC o móvil.
-- **Gestión de Consolas y Videojuegos:** Actualización de precios por tiempo y lista de juegos disponibles.
-- **Promociones y Ofertas:** Creación y activación de promociones con fechas y horarios.
-- **Información del Negocio:** Configuración de WhatsApp de pedidos, redes sociales y horarios de apertura.
-- **Galería del Local:** Carga y administración de fotografías de eventos y ambiente.
+### 2. Panel Administrativo Central (CMS / Backoffice)
+- **Autenticacion y Control de Acceso:** Acceso protegido mediante JSON Web Tokens (JWT) firmados, almacenamiento en sesión local y verificación en cada recarga de vista.
+- **Proteccion contra Fuerza Bruta:** Limitación estricta de peticiones en endpoints de acceso y bloqueo temporal automático de formulario tras intentos fallidos reiterados.
+- **Gestion de Carta y Precios:** Creación, edición, alternancia de disponibilidad de stock y marcado de platos destacados.
+- **Control de Tarifas Gaming:** Ajuste granular de precios de alquiler por hora y media hora.
+- **Actualizacion de Parametros Comerciales:** Modificación directa de canales de contacto, redes sociales y horarios de operación del establecimiento.
 
 ---
 
-## 🚀 Inicio Rápido (Quick Start)
+## Arquitectura del Proyecto
 
-### 1. Servidor Backend
-
-```bash
-cd backend
-npm install
-# Crear archivo .env basado en .env.template
-npx prisma db push
-npm run seed
-npm run dev
-```
-
-_Servidor activo en: `http://localhost:3000`_
-
-### 2. Aplicación Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-_Web activa en: `http://localhost:5173`_  
-_Panel de administración: `http://localhost:5173/admin`_
-
----
-
-## 🏗️ Arquitectura del Proyecto
+El repositorio implementa una estructura desacoplada con separación de responsabilidades:
 
 ```text
 LVLUP/
-├── backend/                  # Servidor API RESTful con Express & Prisma
+├── backend/
 │   ├── prisma/
-│   │   ├── schema.prisma     # Esquema de base de datos PostgreSQL
-│   │   └── seed.ts           # Carga de datos iniciales del catálogo
+│   │   ├── schema.prisma          # Definicion del modelo relacional en PostgreSQL
+│   │   └── seed.ts                # Semilla de datos iniciales del establecimiento
 │   └── src/
-│       ├── core/             # Middlewares, seguridad, Prisma Client
-│       └── modules/          # Módulos desacoplados
-│           ├── auth/         # Autenticación JWT y administración
-│           ├── menu/         # Gestión de platos y bebidas
-│           ├── gaming/       # Consolas, tarifas y juegos
-│           ├── promos/       # Promociones y eventos
-│           ├── business/     # Información general, horarios y galería
-│           └── upload/       # Subida y optimización de imágenes
+│       ├── config/                # Configuracion de variables de entorno tipadas
+│       ├── core/                  # Middlewares de seguridad, CORS, rate limiting y sanitizacion
+│       ├── modules/
+│       │   ├── auth/              # Controlador, servicio y repositorio de administradores
+│       │   ├── menu/              # Logica de negocio y endpoints del catalogo
+│       │   ├── gaming/            # Tarifas y gestion de estaciones
+│       │   ├── promos/            # Administracion de promociones vigentes
+│       │   ├── business/          # Informacion institucional y horarios
+│       │   └── upload/            # Gestion y almacenamiento de archivos estaticos
+│       └── index.ts               # Punto de entrada de la API REST
 │
-├── frontend/                 # Aplicación SPA React 19 + TypeScript + Vite
-│   ├── src/
-│   │   ├── application/      # Contextos y estado global reactivo
-│   │   ├── domain/           # Modelos de datos y puertos
-│   │   ├── infrastructure/   # Repositorios, clientes API, mock data
-│   │   └── presentation/     # Componentes visuales, layouts y páginas
-│   │       ├── components/   # Secciones (Hero, Menu, Gaming, Promos, etc.)
-│   │       └── pages/        # LandingPage y AdminPortal
-│   └── public/               # Favicons y recursos públicos
+├── frontend/
+│   ├── public/
+│   │   ├── favicon.svg            # Isotipo vectorial de la marca
+│   │   ├── og-image.png           # Imagen de previsualizacion en redes sociales (1200x630)
+│   │   ├── robots.txt             # Politicas de indexacion para motores de busqueda
+│   │   └── sitemap.xml            # Mapa del sitio para indexacion
+│   └── src/
+│       ├── application/           # Contextos globales de React y proveedores de estado
+│       ├── domain/                # Tipos e interfaces centrales del dominio
+│       ├── infrastructure/        # Clientes HTTP, servicios y datos de respaldo
+│       └── presentation/          # Componentes visuales, layouts y vistas principales
 │
-├── INSTRUCCIONES_INSTALACION.md # Guía para novatos y administradores
-└── README.md
+├── docker-compose.yml             # Orquestacion de servicios (PostgreSQL 16 Alpine)
+└── package.json                   # Scripts unificados de gestion del workspace
 ```
 
 ---
 
-## 🔒 Variables de Entorno (`backend/.env`)
+## Pila Tecnologica
+
+| Capa | Tecnologia | Funcion |
+| :--- | :--- | :--- |
+| **Frontend** | React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion, Lucide Icons | Renderizado reactivo, diseño visual y experiencia de usuario. |
+| **Backend** | Node.js, Express 5, TypeScript | API RESTful orientada a servicios con arquitectura modular. |
+| **Persistencia** | PostgreSQL 16, Prisma ORM 7 | Base de datos relacional y mapeo de datos con migraciones tipadas. |
+| **Seguridad** | Helmet, Express Rate Limit, Bcrypt, JsonWebToken, CORS | Cabeceras HTTP estrictas, cifrado unidireccional y control de accesos. |
+| **Contenedores** | Docker, Docker Compose | Entorno de persistencia local estandarizado. |
+
+---
+
+## Instalacion y Ejecucion Local
+
+### Requisitos Previos
+- Node.js 20.0 o superior
+- Docker Desktop en ejecucion (para la base de datos PostgreSQL)
+- Gestor de paquetes npm
+
+### 1. Iniciar la Base de Datos
+Desde el directorio raíz del proyecto:
+
+```bash
+npm run db:up
+```
+
+### 2. Configurar el Backend
+```bash
+cd backend
+npm install
+npm run db:setup
+```
+
+El comando `db:setup` sincroniza el esquema con PostgreSQL mediante Prisma y ejecuta el script de siembra (`seed.ts`) con el catálogo inicial y el usuario administrador por defecto.
+
+### 3. Iniciar Servicios en Desarrollo
+Desde la raíz del proyecto, puedes iniciar ambos entornos de manera independiente:
+
+```bash
+# Terminal 1: Servidor API Backend (Puerto 3000)
+npm run backend
+
+# Terminal 2: Aplicacion Web Frontend (Puerto 5173)
+npm run frontend
+```
+
+- **Plataforma Web:** `http://localhost:5173`
+- **Panel Administrativo:** `http://localhost:5173/admin`
+- **API Health Check:** `http://localhost:3000/api/health`
+
+---
+
+## Variables de Entorno
+
+Archivo de configuracion en `backend/.env`:
 
 ```env
 DATABASE_URL="postgresql://postgres:admin123@localhost:5432/lvlup_db?schema=public"
 PORT=3000
 NODE_ENV=development
-JWT_SECRET="lvlup_secreto_super_seguro_2026"
+JWT_SECRET="clave_secreta_para_firmado_de_tokens_jwt"
 ```
 
 ---
 
-## 📄 Licencia
+## Politica de Seguridad
 
-Desarrollado para **LVL UP Game Bar**. Todos los derechos reservados.
+- **Cabeceras HTTP:** Implementación de Content Security Policy (CSP), HTTP Strict Transport Security (HSTS) a un año, `X-Content-Type-Options: nosniff` y desactivación de divulgación de tecnología (`hidePoweredBy`).
+- **Limites de Trafico:** Rate limiting estricto de 10 peticiones cada 15 minutos en el endpoint `/api/auth/login` y 120 peticiones por minuto en rutas públicas.
+- **Manejo de Errores:** En entornos de producción no se exponen trazas internas de la base de datos ni detalles del servidor, retornando únicamente respuestas en formato JSON estandarizado.
+
+---
+
+## Creditos y Propiedad Intelectual
+
+Desarrollado por **GStudio Devs** para **LVLUP Game Bar & Lounge**. Todos los derechos reservados. Prohibida la redistribución no autorizada del código fuente.

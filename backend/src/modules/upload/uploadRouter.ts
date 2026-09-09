@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import multer from 'multer';
+import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
 import { requireAuth } from '../../core/authMiddleware';
@@ -12,17 +13,8 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Configuración de Multer
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (_req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname).toLowerCase() || '.webp';
-    cb(null, `lvlup-${uniqueSuffix}${ext}`);
-  },
-});
+// Multer en memoria temporal para procesar con Sharp antes de guardar
+const storage = multer.memoryStorage();
 
 const fileFilter = (
   _req: Request,
@@ -33,7 +25,7 @@ const fileFilter = (
   if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Formato de archivo no válido. Solo se permiten imágenes (JPEG, PNG, WebP, AVIF).'));
+    cb(new Error('Formato no válido. Solo se permiten imágenes (JPEG, PNG, WebP, AVIF, HEIC).'));
   }
 };
 
@@ -41,26 +33,43 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 15 * 1024 * 1024, // Máximo 15MB antes de compresión
+    fileSize: 15 * 1024 * 1024, // Acepta hasta 15MB antes de compresión
   },
 });
 
 /**
  * POST /api/upload
- * Sube una imagen optimizada y devuelve la URL accesible
+ * Procesa la imagen con Sharp: la reescala a max 1000px y la convierte a WebP ultra ligero
  */
-uploadRouter.post('/', requireAuth, upload.single('image'), (req: Request, res: Response) => {
+uploadRouter.post('/', requireAuth, upload.single('image'), async (req: Request, res: Response) => {
   if (!req.file) {
     res.status(400).json({ error: 'No se ha proporcionado ningún archivo de imagen.' });
     return;
   }
 
-  const fileUrl = `/uploads/${req.file.filename}`;
-  res.status(201).json({
-    message: 'Imagen subida exitosamente',
-    url: fileUrl,
-    filename: req.file.filename,
-    size: req.file.size,
-    mimetype: req.file.mimetype,
-  });
+  try {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e6);
+    const filename = `lvlup-${uniqueSuffix}.webp`;
+    const outputPath = path.join(uploadDir, filename);
+
+    // Optimización automática con Sharp: redimensionar a max 1000px y compresión WebP 82%
+    await sharp(req.file.buffer)
+      .resize({ width: 1000, height: 1000, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 82, effort: 4 })
+      .toFile(outputPath);
+
+    const stats = fs.statSync(outputPath);
+    const fileUrl = `/uploads/${filename}`;
+
+    res.status(201).json({
+      message: 'Imagen optimizada y guardada exitosamente en formato WebP',
+      url: fileUrl,
+      filename,
+      size: stats.size,
+      mimetype: 'image/webp',
+    });
+  } catch (error: any) {
+    console.error('Error al procesar imagen con Sharp:', error);
+    res.status(500).json({ error: 'Error al optimizar y guardar la imagen.' });
+  }
 });

@@ -333,27 +333,27 @@ function ItemDetailModal({
   );
 }
 
-/* ──────────────────────────────────────────────
-   MAIN MENU SECTION — Ultra High Performance
-   ────────────────────────────────────────────── */
 export function MenuSection() {
   const { menuItems, searchQuery, setSearch, activeCategory, setCategory, isAdminMode } = useStore();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
   const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+
     return menuItems.filter((item) => {
-      // 1. Filtro de categoria
+      // 1. Si hay texto en el buscador, busca en TODO el menú globalmente para máxima accesibilidad
       const matchCat =
+        Boolean(q) ||
         activeCategory === 'todos' ||
         item.categoria === activeCategory ||
         (activeCategory === 'promos' && Boolean(item.promo));
 
-      // 2. Busqueda
-      const q = searchQuery.toLowerCase().trim();
+      // 2. Coincidencia por nombre, descripción, categoría, ingredientes o etiquetas
       const matchSearch =
         !q ||
         item.nombre.toLowerCase().includes(q) ||
         item.descripcion.toLowerCase().includes(q) ||
+        item.categoria.toLowerCase().includes(q) ||
         item.ingredientes?.some((ing) => ing.toLowerCase().includes(q)) ||
         item.etiquetas?.some((tag) => tag.toLowerCase().includes(q));
 

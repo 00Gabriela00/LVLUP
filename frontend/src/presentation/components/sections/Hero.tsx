@@ -125,6 +125,8 @@ export function Hero() {
               className="w-full max-w-md lg:max-w-none select-none"
               style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 30px rgba(0,229,255,0.15))' }}
               draggable={false}
+              fetchPriority="high"
+              decoding="async"
             />
           </motion.div>
         </div>

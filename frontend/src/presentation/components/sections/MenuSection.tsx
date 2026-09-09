@@ -89,15 +89,16 @@ function MenuCard({
       {/* Adaptative Photo Container (Fits Full Dish Cleanly) */}
       {item.foto && (
         <div className="w-full h-48 sm:h-52 overflow-hidden relative bg-[#070105] border-b border-white/6 flex items-center justify-center">
-          <img
-            src={item.foto}
-            alt={item.nombre}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-            onError={(e) => {
-              (e.target as HTMLElement).style.display = 'none';
-            }}
-          />
+            <img
+              src={item.foto}
+              alt={item.nombre}
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => {
+                (e.target as HTMLElement).style.display = 'none';
+              }}
+            />
           <div className="absolute inset-0 bg-linear-to-t from-[#0e040c] via-transparent to-transparent opacity-70 pointer-events-none" />
         </div>
       )}
@@ -249,6 +250,8 @@ function ItemDetailModal({
               src={item.foto}
               alt={item.nombre}
               className="max-h-72 w-auto max-w-full object-contain mx-auto rounded-xl"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         )}

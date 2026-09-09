@@ -48,6 +48,10 @@ export class AuthService {
     const fullAdmin = await this.repository.findAdminByEmail(admin.email);
     if (!fullAdmin) throw new Error('Usuario no encontrado');
 
+    if (admin.email === 'admin@lvlup.com') {
+      throw new Error('En modo de demostración pública no está permitido modificar la contraseña.');
+    }
+
     const isMatch = await bcrypt.compare(currentPasswordPlain, fullAdmin.password);
     if (!isMatch) throw new Error('Contraseña actual incorrecta');
 

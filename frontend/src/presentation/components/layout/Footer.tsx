@@ -1,3 +1,4 @@
+import { Lock } from 'lucide-react';
 import { LogoIcon, InstagramIcon, WhatsAppIcon } from '../icons/CustomIcons';
 import { infoGeneral } from '../../../infrastructure/data/initialData';
 
@@ -82,8 +83,17 @@ export function Footer() {
 
         {/* Copyright & Dev Credit */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-[11.5px] text-brand-gray">
-          <div>
-            &copy; {year} LVLUP Game Bar & Lounge. Todos los derechos reservados.
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+            <span>&copy; {year} LVLUP Game Bar & Lounge. Todos los derechos reservados.</span>
+            <span className="text-white/10 hidden sm:inline">·</span>
+            <a
+              href="/admin"
+              className="inline-flex items-center gap-1 text-white/20 hover:text-white/60 transition-colors text-[11px] font-mono tracking-wide"
+              title="Portal Administrativo (Demo)"
+            >
+              <Lock size={10} className="opacity-50" />
+              <span>Portal Admin</span>
+            </a>
           </div>
           <div>
             Diseñado & Desarrollado por{' '}

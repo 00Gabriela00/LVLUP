@@ -1,6 +1,6 @@
 import type { MenuItem, MenuCategory, GamingStation, Promo, InfoGeneral } from '../data/initialData';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || '/api';
 
 async function getAuthHeaders(): Promise<HeadersInit> {
   const token = typeof window !== 'undefined' ? localStorage.getItem('lvlup_admin_token') : null;
@@ -55,6 +55,13 @@ interface ApiBusiness {
   whatsapp: string;
   instagram: string;
   hoursJson?: Record<string, string>;
+}
+
+export interface AdminUserSession {
+  id: string;
+  email: string;
+  name?: string;
+  role?: string;
 }
 
 export const apiClient = {
@@ -384,7 +391,7 @@ export const apiClient = {
     }
   },
 
-  async getMe(): Promise<{ success: boolean; user?: any }> {
+  async getMe(): Promise<{ success: boolean; user?: AdminUserSession }> {
     try {
       const headers = await getAuthHeaders();
       const res = await fetch(`${API_BASE_URL}/auth/me`, { headers });

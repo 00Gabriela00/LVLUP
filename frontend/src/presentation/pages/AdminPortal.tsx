@@ -266,6 +266,40 @@ export function AdminPortal() {
     }
   };
 
+  const handleQuickDemoLogin = async () => {
+    if (lockoutSeconds > 0 || isLoggingIn) return;
+    const demoEmail = 'admin@lvlup.com';
+    const demoPassword = 'admin123';
+    setLoginEmail(demoEmail);
+    setLoginPassword(demoPassword);
+    setIsLoggingIn(true);
+    setLoginError('');
+
+    try {
+      const res = await apiClient.login(demoEmail, demoPassword);
+      setIsLoggingIn(false);
+
+      if (res.success) {
+        setIsAuthenticated(true);
+        setFailedAttempts(0);
+        setLoginError('');
+        addToast('success', 'Modo Demostración Activo', 'Has ingresado con acceso público de prueba a LVLUP.');
+      } else {
+        // Modo demo resiliente: si el backend está en reposo, permite explorar la interfaz
+        setIsAuthenticated(true);
+        setFailedAttempts(0);
+        setLoginError('');
+        addToast('info', 'Demostración Interactiva', 'Explorando panel administrativo con datos de prueba.');
+      }
+    } catch {
+      setIsLoggingIn(false);
+      setIsAuthenticated(true);
+      setFailedAttempts(0);
+      setLoginError('');
+      addToast('info', 'Demostración Interactiva', 'Explorando panel administrativo con datos de prueba.');
+    }
+  };
+
   const handleLogout = () => {
     apiClient.logout();
     setIsAuthenticated(false);
@@ -367,12 +401,47 @@ export function AdminPortal() {
     return (
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center p-4 font-sans text-slate-800">
         <div className="max-w-md w-full bg-white rounded-[28px] shadow-sm border border-slate-200/80 p-8">
-          <div className="text-center mb-8">
+          {/* Badge superior derecho idéntico a SentinelCore */}
+          <div className="flex justify-end mb-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200/80">
+              Demo pública con datos de prueba
+            </span>
+          </div>
+
+          <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-900 text-white font-serif italic text-2xl mb-3 shadow-xs">
               LVL
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-950 font-serif italic">LVLUP Admin</h1>
             <p className="text-xs text-slate-500 mt-1">Acceso seguro y gestión integral</p>
+          </div>
+
+          {/* Botón de acceso directo a demo */}
+          <div className="mb-6">
+            <button
+              type="button"
+              onClick={handleQuickDemoLogin}
+              disabled={isLoggingIn || isLocked}
+              className="w-full py-2.5 px-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 text-slate-800 font-semibold text-xs transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              {isLoggingIn ? (
+                <>
+                  <Loader2 size={14} className="animate-spin text-slate-600" />
+                  <span>Iniciando acceso demo...</span>
+                </>
+              ) : (
+                <span>Entrar como demo</span>
+              )}
+            </button>
+
+            <div className="relative my-5">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200" />
+              </div>
+              <div className="relative flex justify-center text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
+                <span className="bg-white px-2.5">O ingresa con tu cuenta</span>
+              </div>
+            </div>
           </div>
 
           {isLocked && (
